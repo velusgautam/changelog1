@@ -4,9 +4,6 @@ const github = require('@actions/github');
 const fs = require('fs');
 const path = require('path');
 
-const gitPath = path.join(__dirname, 'git.js');
-const runGit = require(gitPath);
-
 try {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput('who-to-greet');
@@ -42,29 +39,14 @@ try {
   const changelogPath = path.join(__dirname, 'CHANGELOG.md');
   console.log('---changelogPath ---');
   console.log(changelogPath);
-  fs.readFile(changelogPath, 'utf8', (err, data) => {
-    // if there's an error, log it and return
-    if (err) {
-      console.error(err);
-      return;
-    }
+  const data = fs.readFileSync(changelogPath, 'utf8');
+  const newData = data + payload;
 
-    const newData = data + payload;
+  console.log(`New Changelog is : ${newData}`);
 
-    console.log(`New Changelog is : ${newData}`);
-
-    fs.writeFile(changelogPath, newData, (err) => {
-      // If there is any error in writing to the file, return
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      // Log this message if the file was written to successfully
-      console.log('wrote to file successfully');
-      runGit();
-    });
-  });
+  fs.writeFileSync(changelogPath, newData);
+  // Log this message if the file was written to successfully
+  console.log('wrote to file successfully');
 
   const time = new Date().toTimeString();
   core.setOutput('time', time);
