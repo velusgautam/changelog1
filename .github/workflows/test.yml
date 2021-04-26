@@ -24,12 +24,13 @@ jobs:
       - name: Simulate merged branch
         run: |
           # git init
-          git switch $GITHUB_HEAD_REF
+          git status
+          git switch -c temp
           git add CHANGELOG.md
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "Changelog Commit"
           # git remote add origin git@github.com:velusgautam/changelogs.git
-          git push origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
+          git push origin temp:temp
 
     # Use the output from the `hello` step
