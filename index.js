@@ -39,7 +39,7 @@ try {
   const changelogPath = path.join(__dirname, 'CHANGELOG.md');
   console.log('---changelogPath ---');
   console.log(changelogPath);
-  fs.readFile(changelogPath, (err, data) => {
+  fs.readFile(changelogPath, 'utf8', (err, data) => {
     // if there's an error, log it and return
     if (err) {
       console.error(err);
@@ -50,16 +50,16 @@ try {
 
     console.log(`New Changelog is : ${newData}`);
 
-    // fs.writeFile('./CHANGELOG.md', newData, (err) => {
-    //   // If there is any error in writing to the file, return
-    //   if (err) {
-    //     console.error(err);
-    //     return;
-    //   }
+    fs.writeFile(changelogPath, newData, (err) => {
+      // If there is any error in writing to the file, return
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-    //   // Log this message if the file was written to successfully
-    //   console.log('wrote to file successfully');
-    // });
+      // Log this message if the file was written to successfully
+      console.log('wrote to file successfully');
+    });
   });
 
   const time = new Date().toTimeString();
