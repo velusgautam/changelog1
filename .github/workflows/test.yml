@@ -26,12 +26,8 @@ jobs:
         uses: velusgautam/changelog1@main
         with:
           who-to-greet: 'Mona the Octocat'
-        id: hello
-        uses: velusgautam/changelog1@main
-        with:
-          who-to-greet: 'Mona the Octocat'
       - name: Simulate merged branch
-        needs: 
+        needs:
         run: |
           echo "${{ github.action_path }}"
           echo "# ${{github.context.payload.pull_request.body}}" >> CHANGELOG.md
