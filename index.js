@@ -15,26 +15,28 @@ try {
     2
   );
   console.log(`The event payload is: ${payload}`);
-  fs.readFile('./CHANGELOG.md', (err, data) => {
-    // if there's an error, log it and return
-    if (err) {
-      console.error(err);
-      return;
-    }
+  const data = fs.readFileSync('/CHANGELOG.md', 'utf8');
+  console.log(`The event payload is: ${JSON.stringify(data)}`);
+  // fs.readFile('./CHANGELOG.md', (err, data) => {
+  //   // if there's an error, log it and return
+  //   if (err) {
+  //     console.error(err);
+  //     return;
+  //   }
 
-    const newData = data.toString + payload;
+  //   const newData = data.toString + payload;
 
-    fs.writeFile('./CHANGELOG.md', newData, (err) => {
-      // If there is any error in writing to the file, return
-      if (err) {
-        console.error(err);
-        return;
-      }
+  //   fs.writeFile('./CHANGELOG.md', newData, (err) => {
+  //     // If there is any error in writing to the file, return
+  //     if (err) {
+  //       console.error(err);
+  //       return;
+  //     }
 
-      // Log this message if the file was written to successfully
-      console.log('wrote to file successfully');
-    });
-  });
+  //     // Log this message if the file was written to successfully
+  //     console.log('wrote to file successfully');
+  //   });
+  // });
 } catch (error) {
   core.setFailed(error.message);
 }
