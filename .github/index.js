@@ -12,11 +12,11 @@ try {
       "'"
     );
     finalData = `
-    ##${title}
+## ${title}
 
-    ##Changes
+##Changes
 
-    ${changeDescription}
+${changeDescription}
     `;
   }
 
