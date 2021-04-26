@@ -21,10 +21,12 @@ try {
       return console.log('Unable to scan directory: ' + err);
     }
     //listing all files using forEach
+    console.log('---directoryPath ---');
     files.forEach(function (file) {
       // Do whatever you want to do with the file
       console.log(file);
     });
+    console.log('---directoryPath ---');
   });
   console.log('---directoryPath end---');
   fs.readdir(process.cwd(), function (err, files) {
@@ -33,10 +35,12 @@ try {
       return console.log('Unable to scan directory: ' + err);
     }
     //listing all files using forEach
+    console.log('---process start---');
     files.forEach(function (file) {
       // Do whatever you want to do with the file
       console.log(file);
     });
+    console.log('---process end end---');
   });
   console.log('---process end end---');
   const time = new Date().toTimeString();
