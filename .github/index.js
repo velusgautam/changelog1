@@ -28,7 +28,9 @@ try {
   //   });
   //   console.log('---directoryPath ---');
   // });
-  console.log(github.context.payload.pull_request.body);
+
+  const payload = JSON.stringify(github.context.payload, undefined, 2);
+  console.log(`The event payload: ${payload}`);
   // const payload = JSON.stringify(
   //   github.context.payload.pull_request.body,
   //   undefined,
@@ -46,7 +48,8 @@ try {
 
   // fs.writeFileSync(changelogPath, newData);
   // // Log this message if the file was written to successfully
-  // console.log('wrote to file successfully');
+  console.log('-----------------------');
+  console.log(github.context.payload.pull_request.body);
   const finalData = github.context.payload.pull_request.body.replace(/"/g, "'");
   // const time = new Date().toTimeString();
   core.setOutput('changelog', finalData);
