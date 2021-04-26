@@ -31,8 +31,8 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git switch $GITHUB_HEAD_REF
-          git checkout $GITHUB_BASE_REF CHANGELOG.md
-          echo "${{steps.hello.outputs.time}}" >> CHANGELOG.md
+          # git checkout $GITHUB_BASE_REF CHANGELOG.md
+          echo "${{steps.create-change-log.outputs.changelog}}" >> CHANGELOG.md
           git add CHANGELOG.md
           git commit -m "Changelog Commit"
           git push --set-upstream origin $GITHUB_HEAD_REF
