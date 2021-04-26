@@ -32,12 +32,14 @@ jobs:
           # echo "#" >> CHANGELOG.md
           # git init
           git status
-          git switch -c temp3
-          git add CHANGELOG.md
+          git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
+          git checkout $GITHUB_HEAD_REF
+
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git add CHANGELOG.md
           git commit -m "Changelog Commit"
           # git remote add origin git@github.com:velusgautam/changelogs.git
-          git push origin temp3:temp3
+          git push
 
     # Use the output from the `hello` step
