@@ -14,9 +14,16 @@ jobs:
   commit-back:
     name: commit back
     needs: new_changelog
+    runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v2
+          with:
+            node-version: '14'
+            check-latest: true
+
+      - uses: actions/checkout@v2
+
       - name: Simulate merged branch
-        if: ${{ github.event_name == 'pull_request' }}
         run: |
           # git init
           # git switch $GITHUB_HEAD_REF
