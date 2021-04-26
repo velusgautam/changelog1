@@ -17,12 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v2
-          with:
-            node-version: '14'
-            check-latest: true
-
+        with:
+          node-version: '14'
+          check-latest: true
       - uses: actions/checkout@v2
-
       - name: Simulate merged branch
         run: |
           # git init
