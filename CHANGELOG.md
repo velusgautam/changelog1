@@ -5,3 +5,4 @@
 - FR-10404 confirm dialog and information dialog design changes batch 1
 - FR-13815 Update dropzones
 - FR-12691 Allow multiple refunds for VAT
+- FR-12691 Allow multiple refunds for VAT
