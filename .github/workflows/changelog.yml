@@ -1,8 +1,8 @@
 on:
   pull_request:
     types: [opened, synchronize, edited]
-    branches:
-      - master
+#     branches:
+#       - master
 
 jobs:
   create-changelog:
