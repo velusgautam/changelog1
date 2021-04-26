@@ -21,14 +21,14 @@ jobs:
           node-version: '14'
           check-latest: true
       - uses: actions/checkout@v2
-      - name: Hello world action step
-        id: hello
+      - name: Create Changelog
+        id: create-change-log
         uses: velusgautam/changelog1@main
-        with:
-          who-to-greet: 'Mona the Octocat'
+        # with:
+        #   who-to-greet: 'Mona the Octocat'
       - name: Simulate merged branch
         run: |
-          echo "${{steps.hello.outputs.time}}" >> CHANGELOG.md
+          echo "${{steps.create-change-log.outputs.changelog}}" >> CHANGELOG.md
           # echo "#" >> CHANGELOG.md
           # git init
           git status

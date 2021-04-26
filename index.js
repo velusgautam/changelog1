@@ -29,12 +29,12 @@ try {
   //   console.log('---directoryPath ---');
   // });
   console.log(github.context.payload.pull_request.body);
-  const payload = JSON.stringify(
-    github.context.payload.pull_request.body,
-    undefined,
-    2
-  );
-  console.log(`The event payload is: ${payload}`);
+  // const payload = JSON.stringify(
+  //   github.context.payload.pull_request.body,
+  //   undefined,
+  //   2
+  // );
+  // console.log(`The event payload is: ${payload}`);
 
   // const changelogPath = path.join(__dirname, 'CHANGELOG.md');
   // console.log('---changelogPath ---');
@@ -49,7 +49,7 @@ try {
   // console.log('wrote to file successfully');
   const finalData = github.context.payload.pull_request.body.replace(/"/g, "'");
   // const time = new Date().toTimeString();
-  core.setOutput('time', finalData);
+  core.setOutput('changelog', finalData);
   // Get the JSON webhook payload for the event that triggered the workflow
 
   // await exec.exec('node', ['changelog.js', 'foo=bar']);
