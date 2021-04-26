@@ -25,8 +25,8 @@ jobs:
         uses: velusgautam/changelog1@main
         # with:
         #   who-to-greet: 'Mona the Octocat'
-      - name: Simulate merged branch
       - uses: actions/checkout@v2
+      - name: Simulate merged branch
         run: |
           echo $GITHUB_HEAD_REF
           echo $GITHUB_BASE_REF
