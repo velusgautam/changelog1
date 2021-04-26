@@ -15,7 +15,7 @@ try {
     2
   );
   console.log(`The event payload is: ${payload}`);
-  fs.readFile('CHANGELOG.md', (err, data) => {
+  fs.readFile('./CHANGELOG.md', (err, data) => {
     // if there's an error, log it and return
     if (err) {
       console.error(err);
@@ -24,7 +24,7 @@ try {
 
     const newData = data.toString + payload;
 
-    fs.writeFile('CHANGELOG.md', newData, (err) => {
+    fs.writeFile('./CHANGELOG.md', newData, (err) => {
       // If there is any error in writing to the file, return
       if (err) {
         console.error(err);
