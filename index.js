@@ -10,10 +10,6 @@ try {
   // console.log(`Hello ${nameToGreet}!`);
   // console.log('process.cwd()');
   // console.log(process.cwd());
-  // console.log('---end---');
-  // console.log(__dirname);
-  // console.log('---end---');
-  // const directoryPath = __dirname;
 
   // fs.readdir(directoryPath, function (err, files) {
   //   //handling error
