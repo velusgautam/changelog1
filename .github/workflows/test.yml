@@ -27,6 +27,7 @@ jobs:
         #   who-to-greet: 'Mona the Octocat'
       - uses: actions/checkout@v2
       - name: Simulate merged branch
+        if: ${{ steps.create-change-log.outputs.changelog != '' }}
         run: |
           echo $GITHUB_HEAD_REF
           echo $GITHUB_BASE_REF

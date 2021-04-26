@@ -1,61 +1,26 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-// const exec = require('@actions/exec');
-// const fs = require('fs');
-// const path = require('path');
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  // const nameToGreet = core.getInput('who-to-greet');
-  // console.log(`Hello ${nameToGreet}!`);
-  // console.log('process.cwd()');
-  // console.log(process.cwd());
-  // console.log('---end---');
-  // console.log(__dirname);
-  // console.log('---end---');
-  // const directoryPath = __dirname;
+  const isPROpened = github.context.payload.action === 'opened';
 
-  // fs.readdir(directoryPath, function (err, files) {
-  //   //handling error
-  //   if (err) {
-  //     return console.log('Unable to scan directory: ' + err);
-  //   }
-  //   //listing all files using forEach
-  //   console.log('---directoryPath ---');
-  //   files.forEach(function (file) {
-  //     // Do whatever you want to do with the file
-  //     console.log(file);
-  //   });
-  //   console.log('---directoryPath ---');
-  // });
+  let finalData = '';
+  if (isPROpened === true) {
+    const title = github.context.payload.pull_request.title;
+    const changeDescription = github.context.payload.pull_request.body.replace(
+      /"/g,
+      "'"
+    );
+    finalData = `
+    ##${title}
 
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
-  // const payload = JSON.stringify(
-  //   github.context.payload.pull_request.body,
-  //   undefined,
-  //   2
-  // );
-  // console.log(`The event payload is: ${payload}`);
+    ##Changes
 
-  // const changelogPath = path.join(__dirname, 'CHANGELOG.md');
-  // console.log('---changelogPath ---');
-  // console.log(changelogPath);
-  // const data = fs.readFileSync(changelogPath, 'utf8');
-  // const newData = data + payload;
+    ${changeDescription}
+    `;
+  }
 
-  // console.log(`New Changelog is : ${newData}`);
-
-  // fs.writeFileSync(changelogPath, newData);
-  // // Log this message if the file was written to successfully
-  console.log('-----------------------');
-  console.log(github.context.payload.pull_request.body);
-  const finalData = github.context.payload.pull_request.body.replace(/"/g, "'");
-  // const time = new Date().toTimeString();
   core.setOutput('changelog', finalData);
-  // Get the JSON webhook payload for the event that triggered the workflow
-
-  // await exec.exec('node', ['changelog.js', 'foo=bar']);
 } catch (error) {
   core.setFailed(error.message);
 }
