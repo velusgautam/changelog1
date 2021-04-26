@@ -22,7 +22,7 @@ jobs:
       #     check-latest: true
       - name: Create Changelog
         id: create-change-log
-        uses: velusgautam/changelog1@main
+        uses: velusgautam/changelog1@main/.github/action.yml
         # with:
         #   who-to-greet: 'Mona the Octocat'
       - uses: actions/checkout@v2
