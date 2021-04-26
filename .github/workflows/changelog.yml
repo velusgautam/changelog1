@@ -18,4 +18,6 @@ jobs:
 
        - name: Simulate merge branch
          run: |
+          echo "$(github.event.pull_request.title)"
+           echo "$(github.event.pull_request)"
           echo "$(github.event.pull_request.description)"
