@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 // const exec = require('@actions/exec');
 const fs = require('fs');
+const path = require('path');
 
 try {
   // `who-to-greet` input defined in action metadata file
@@ -12,6 +13,32 @@ try {
   console.log('---end---');
   console.log(__dirname);
   console.log('---end---');
+  const directoryPath = __dirname;
+  console.log('---directoryPath ---');
+  fs.readdir(directoryPath, function (err, files) {
+    //handling error
+    if (err) {
+      return console.log('Unable to scan directory: ' + err);
+    }
+    //listing all files using forEach
+    files.forEach(function (file) {
+      // Do whatever you want to do with the file
+      console.log(file);
+    });
+  });
+  console.log('---directoryPath end---');
+  fs.readdir(process.cwd(), function (err, files) {
+    //handling error
+    if (err) {
+      return console.log('Unable to scan directory: ' + err);
+    }
+    //listing all files using forEach
+    files.forEach(function (file) {
+      // Do whatever you want to do with the file
+      console.log(file);
+    });
+  });
+  console.log('---process end end---');
   const time = new Date().toTimeString();
   core.setOutput('time', time);
   // Get the JSON webhook payload for the event that triggered the workflow
