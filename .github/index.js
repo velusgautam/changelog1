@@ -5,10 +5,12 @@ try {
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`The event payload: ${payload}`);
 
-  const isPROpened = github.context.payload.action === 'opened';
+  const shouldTrigger =
+    github.context.payload.action === 'opened' ||
+    github.context.payload.action === 'edited';
 
   let releaseLog = '';
-  if (isPROpened === true) {
+  if (shouldTrigger === true) {
     const title = github.context.payload.pull_request.title;
     const changeDescription = github.context.payload.pull_request.body.replace(
       /"/g,
