@@ -11,12 +11,10 @@ jobs:
         with:
           who-to-greet: 'Mona the Octocat'
       # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
-      - name: first_step
+      - name: Simulate merged
         run: |
-          git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
-          git pull github ${GITHUB_REF} --ff-only
-          git add ...
-          git commit -m "Update native model"
-          git push github HEAD:${GITHUB_REF}
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add CHANGELOG.md
+          git commit -m "CHANGELOG COMMIT"
+          git push origin $GITHUB_HEAD_REF

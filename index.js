@@ -46,7 +46,7 @@ try {
       return;
     }
 
-    const newData = data.toString + payload;
+    const newData = data + payload;
 
     console.log(`New Changelog is : ${newData}`);
 
