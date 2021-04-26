@@ -27,7 +27,6 @@ jobs:
         with:
           who-to-greet: 'Mona the Octocat'
       - name: Simulate merged branch
-        needs:
         run: |
           echo "${{ github.action_path }}"
           echo "# ${{github.context.payload.pull_request.body}}" >> CHANGELOG.md
