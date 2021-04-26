@@ -28,7 +28,7 @@ jobs:
           who-to-greet: 'Mona the Octocat'
       - name: Simulate merged branch
         run: |
-          echo "${{steps.hello.outputs.time}}"" >> CHANGELOG.md
+          echo "${{steps.hello.outputs.time}}" >> CHANGELOG.md
           # echo "#" >> CHANGELOG.md
           # git init
           git status
