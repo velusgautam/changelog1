@@ -28,16 +28,16 @@ jobs:
           who-to-greet: 'Mona the Octocat'
       - name: Simulate merged branch
         run: |
-          echo steps.hello.outputs.time >> CHANGELOG.md
+          echo "${{steps.hello.outputs.time}}"" >> CHANGELOG.md
           # echo "#" >> CHANGELOG.md
           # git init
           git status
-          git switch -c temp2
+          git switch -c temp3
           git add CHANGELOG.md
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "Changelog Commit"
           # git remote add origin git@github.com:velusgautam/changelogs.git
-          git push origin temp2:temp2
+          git push origin temp3:temp3
 
     # Use the output from the `hello` step
