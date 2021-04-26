@@ -40,6 +40,6 @@ jobs:
           git add CHANGELOG.md
           git commit -m "Changelog Commit"
           # git remote add origin git@github.com:velusgautam/changelogs.git
-          git push
+          git push --set-upstream origin $GITHUB_HEAD_REF
 
     # Use the output from the `hello` step
