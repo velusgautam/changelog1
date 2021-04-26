@@ -28,16 +28,16 @@ jobs:
           who-to-greet: 'Mona the Octocat'
       - name: Simulate merged branch
         run: |
-          echo "${{ github.action_path }}"
-          echo "# ${{github.context.payload.pull_request.body}}" >> CHANGELOG.md
+          # echo "${{ github.action_path }}"
+          # echo "#" >> CHANGELOG.md
           # git init
           git status
-          git switch develop
+          git switch -c temp1
           git add CHANGELOG.md
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "Changelog Commit"
           # git remote add origin git@github.com:velusgautam/changelogs.git
-          git push origin develop:develop
+          git push origin temp1:temp1
 
     # Use the output from the `hello` step
