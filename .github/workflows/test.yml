@@ -16,17 +16,17 @@ jobs:
     name: commit back
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          check-latest: true
-      - uses: actions/checkout@v2
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '14'
+      #     check-latest: true
       - name: Create Changelog
         id: create-change-log
         uses: velusgautam/changelog1@main
         # with:
         #   who-to-greet: 'Mona the Octocat'
       - name: Simulate merged branch
+      - uses: actions/checkout@v2
         run: |
           echo $GITHUB_HEAD_REF
           echo $GITHUB_BASE_REF
@@ -38,6 +38,6 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "Changelog Commit"
-          git push --set-upstream origin $GITHUB_HEAD_REF
+          git push --set-upstream origin $GITHUB_HEAD_REF --no-verify
 
     # Use the output from the `hello` step
