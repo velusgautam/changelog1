@@ -13,7 +13,6 @@ jobs:
 
   commit-back:
     name: commit back
-    needs: new_changelog
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v2
