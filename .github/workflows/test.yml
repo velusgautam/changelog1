@@ -6,15 +6,16 @@ jobs:
     name: A job to say hello
     steps:
       - name: Hello world action step
-        id: hello
-        uses: velusgautam/changelog1@main
+      id: hello
+      uses: velusgautam/changelog1@main
+      with:
+        who-to-greet: 'Mona the Octocat'
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
         with:
-          who-to-greet: 'Mona the Octocat'
+          author_name: Your Name
+          author_email: mail@example.com
+          message: 'Your commit message'
+          add: '*.md'
       # Use the output from the `hello` step
-      - name: Simulate merged
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add CHANGELOG.md
-          git commit -m "CHANGELOG COMMIT"
-          git push origin $GITHUB_HEAD_REF
