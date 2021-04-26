@@ -6,6 +6,10 @@
 - FR-13815 Update dropzones
 - FR-12691 Allow multiple refunds for VAT
 - FR-12691 Allow multiple refunds for VAT
+## RELEASE 2020-07-21
+
+### Changed
+
 - FR-14350: Info Card bug
 - FR-14356 correctly create card labels
 - FR-4098 add audience in create experiment
