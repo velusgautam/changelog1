@@ -1,4 +1,4 @@
-# Hello world javascript action
+# Hello CHANGELOG
 
 - FR-14330 New icon sandbox page
 - FR-13953 Feature toggle info card terminal rights
