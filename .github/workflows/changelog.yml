@@ -1,7 +1,8 @@
-on: 
-  pull_request
-    branches:
-      - master
+on:
+  [pull_request]
+  # :
+  # branches:
+  #   - master
 
 jobs:
   create-changelog:
@@ -13,7 +14,7 @@ jobs:
         uses: velusgautam/changelog1/.github@main
 
       - uses: actions/checkout@v2
-      
+
       - name: Simulate merged branch
         if: ${{ steps.create-change-log.outputs.changelog != '' }}
         run: |
