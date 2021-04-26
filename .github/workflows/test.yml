@@ -22,6 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Simulate merged branch
         run: |
+          echo "# ${{fromJson(github.context.payload.pull_request.body)}}"
           echo "# ${{fromJson(github.context.payload.pull_request.body)}}" >> CHANGELOG.md
           # git init
           git status
