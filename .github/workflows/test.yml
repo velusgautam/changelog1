@@ -1,7 +1,7 @@
 on: [pull_request]
 
 jobs:
-  hello_world_job:
+  new_changelog:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
@@ -11,8 +11,10 @@ jobs:
         with:
           who-to-greet: 'Mona the Octocat'
 
-      - uses: actions/checkout@v2
-
+  commit-back:
+    name: commit back
+    needs: new_changelog
+    steps:
       - name: Simulate merged branch
         if: ${{ github.event_name == 'pull_request' }}
         run: |
@@ -22,7 +24,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "Changelog Commit"
-          git remote add origin git@github.com:velusgautam/changelogs.git
+          # git remote add origin git@github.com:velusgautam/changelogs.git
           git push origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
 
-      # Use the output from the `hello` step
+    # Use the output from the `hello` step
