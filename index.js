@@ -47,7 +47,7 @@ try {
   // fs.writeFileSync(changelogPath, newData);
   // // Log this message if the file was written to successfully
   // console.log('wrote to file successfully');
-  const finalData = payload.replace(/"/g, "'").toString();
+  const finalData = github.context.payload.pull_request.body.replace(/"/g, "'");
   // const time = new Date().toTimeString();
   core.setOutput('time', finalData);
   // Get the JSON webhook payload for the event that triggered the workflow
