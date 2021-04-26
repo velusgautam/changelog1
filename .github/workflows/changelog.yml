@@ -1,7 +1,8 @@
 on:
-  release:
+  pull_request:
     types: [opened, synchronize, edited]
-#     types: [opened, synchronize, edited]
+  pull_request_review_comment:
+    types: [created]
 #     branches:
 #       - master
 
