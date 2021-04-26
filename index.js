@@ -4,6 +4,9 @@ const github = require('@actions/github');
 const fs = require('fs');
 const path = require('path');
 
+const gitPath = path.join(__dirname, 'git.js');
+const runGit = require(gitPath);
+
 try {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput('who-to-greet');
@@ -59,6 +62,7 @@ try {
 
       // Log this message if the file was written to successfully
       console.log('wrote to file successfully');
+      runGit();
     });
   });
 
