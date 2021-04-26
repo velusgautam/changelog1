@@ -1,10 +1,8 @@
 name: 'Changelog'
 description: 'Creates a changelog on release and add to commit'
-# inputs:
-#   who-to-greet: # id of input
-#     description: 'Who to greet'
-#     required: true
-#     default: 'World'
+branding:
+  icon: 'award'
+  color: 'green'
 outputs:
   changelog: # id of output
     description: 'change log from PR description'

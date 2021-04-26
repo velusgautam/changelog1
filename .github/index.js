@@ -4,23 +4,21 @@ const github = require('@actions/github');
 try {
   const isPROpened = github.context.payload.action === 'opened';
 
-  let finalData = '';
+  let releaseLog = '';
   if (isPROpened === true) {
     const title = github.context.payload.pull_request.title;
     const changeDescription = github.context.payload.pull_request.body.replace(
       /"/g,
       "'"
     );
-    finalData = `
+    releaseLog = `
 ## ${title}
-
-##Changes
 
 ${changeDescription}
     `;
   }
 
-  core.setOutput('changelog', finalData);
+  core.setOutput('changelog', releaseLog);
 } catch (error) {
   core.setFailed(error.message);
 }
