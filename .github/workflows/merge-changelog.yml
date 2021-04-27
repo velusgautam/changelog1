@@ -17,12 +17,12 @@ jobs:
 #         if: ${{ steps.create-change-log.outputs.changelog != '' }}
         run: |
           git remote add destination git@github.com:velusgautam/changelogs.git
-          git fetch origin main:main
-          git switch main
-          git checkout main sonic-studio/CHANGELOG.md
+          git fetch destination main:main
+          git switch destination/main
+          git checkout destination/main sonic-studio/CHANGELOG.md
           echo "${{steps.create-change-log.outputs.changelog}}" >> sonic-studio/CHANGELOG.md
-          git add CHANGELOG.md
+          git add sonic-studio/CHANGELOG.md
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "Changelog Commit"
-          git push --set-upstream destination main --no-verify
+          git push --set-upstream destination main --no-verify -f
