@@ -1,0 +1,28 @@
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  sync-changelog:
+    name: sync changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Changelog
+        id: create-change-log
+        uses: velusgautam/changelog1/.github@main
+
+      - uses: actions/checkout@v2
+
+      - name: Simulate merged branch
+#         if: ${{ steps.create-change-log.outputs.changelog != '' }}
+        run: |
+          git remote add origin git@github.com:velusgautam/changelogs.git
+          git fetch origin main:main
+          git switch main
+          git checkout main sonic-studio/CHANGELOG.md
+          echo "${{steps.create-change-log.outputs.changelog}}" >> sonic-studio/CHANGELOG.md
+          git add CHANGELOG.md
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -m "Changelog Commit"
+          git push --set-upstream origin main --no-verify
