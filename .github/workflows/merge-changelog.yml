@@ -16,7 +16,6 @@ jobs:
       - name: Simulate merged branch
 #         if: ${{ steps.create-change-log.outputs.changelog != '' }}
         run: |
-          git remote rm destination
           git remote add destination git@github.com:velusgautam/changelogs.git
           git fetch origin main:main
           git switch main
