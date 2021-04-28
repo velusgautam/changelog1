@@ -58,3 +58,8 @@
 ## Update README.md
 
 xfvasdf asdfasf
+
+## RELEASE WITH SYNC
+
+- SYNC CHANGE-LOG COMMIT
+
