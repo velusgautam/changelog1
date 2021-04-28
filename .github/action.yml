@@ -1,0 +1,11 @@
+name: 'Changelog'
+description: 'Creates a changelog on release and add to commit'
+branding:
+  icon: 'award'
+  color: 'green'
+outputs:
+  changelog: # id of output
+    description: 'change log from PR description'
+runs:
+  using: 'node12'
+  main: 'index.js'
