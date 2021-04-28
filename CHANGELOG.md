@@ -63,3 +63,12 @@ xfvasdf asdfasf
 
 - SYNC CHANGE-LOG COMMIT
 
+
+## RELEASE SYNC TEST 2
+
+NEW RELEASE TICKET NAMES
+NEW RELEASE TICKET NAMES
+NEW RELEASE TICKET NAMES
+[FR-123](https://discoveryinc.atlassian.net/browse/FR-123)
+[FR-1234](https://discoveryinc.atlassian.net/browse/FR-1234)
+
