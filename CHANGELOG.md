@@ -86,10 +86,3 @@ GITHUB_TOKEN
 - GITHUB TOKEN TEST
 [FR-123](https://discoveryinc.atlassian.net/browse/FR-123)
 
-
-## Update README.md
-
-- Update README.md
-- Update README.md
-- [FR-2525](https://discoveryinc.atlassian.net/browse/FR-2525)
-
