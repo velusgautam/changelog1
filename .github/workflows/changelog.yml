@@ -9,7 +9,7 @@ on:
   pull_request:
     types: [opened, edited]
     branches:
-      - master
+      - main
 
 jobs:
   create-changelog:
