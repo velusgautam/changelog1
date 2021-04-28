@@ -17,8 +17,5 @@
     "url": "https://github.com/velusgautam/changelog1/issues"
   },
   "homepage": "https://github.com/velusgautam/changelog1#readme",
-  "dependencies": {
-    "@actions/core": "^1.2.7",
-    "@actions/github": "^4.0.0"
-  }
+  "dependencies": {}
 }

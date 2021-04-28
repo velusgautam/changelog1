@@ -1,28 +1,62 @@
 on:
   pull_request:
-    types: [closed]
 
 jobs:
   sync-changelog:
     name: sync changelog
     runs-on: ubuntu-latest
     steps:
-      - name: Create Changelog
+      - name: sync changelog
         id: create-change-log
-        uses: velusgautam/changelog1/.github@main
+        # uses: velusgautam/changelog1/.github@main
 
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
-      - name: Simulate merged branch
+      # - name: sync changelog
 #         if: ${{ steps.create-change-log.outputs.changelog != '' }}
         run: |
-          git remote add destination git@github.com:velusgautam/changelogs.git
-          git fetch destination main:main
-          git switch destination/main
-          git checkout destination/main sonic-studio/CHANGELOG.md
-          echo "${{steps.create-change-log.outputs.changelog}}" >> sonic-studio/CHANGELOG.md
-          git add sonic-studio/CHANGELOG.md
+          echo "Starts"
+          CLONE_DIR=$(mktemp -d)
+          DESTINATION_REPOSITORY_USERNAME=velusgautam
+          DESTINATION_REPOSITORY_NAME=changelogs
+          API_TOKEN_GITHUB=${{ secrets.ACCESS_TOKEN }}
+          TARGET_BRANCH=main
+        # COMMIT_MESSAGE="SYNC CHANGELOG"
+
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git commit -m "Changelog Commit"
-          git push --set-upstream destination main --no-verify -f
+          git clone --single-branch --branch master  "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git" "$CLONE_DIR"
+          ls -la "$CLONE_DIR"
+
+          TARGET_DIR=$(mktemp -d)
+          mv "$CLONE_DIR/.git" "$TARGET_DIR"
+
+          echo "Copy contents to target git repository"
+          cp ./CHANGELOG.md "$TARGET_DIR"
+          cd "$TARGET_DIR"
+
+          echo "git add:"
+          git add .
+
+          echo "git status:"
+          git status
+
+          echo "git diff-index:"
+          git diff-index --quiet HEAD || git commit --message "SYNC CHANGELOG"
+
+          echo "git push origin:"
+          git push origin --set-upstream "$TARGET_BRANCH"
+
+
+
+
+          # git remote add destination git@github.com:velusgautam/changelogs.git
+          # git fetch destination main:main
+          # git switch destination/main
+          # git checkout destination/main sonic-studio/CHANGELOG.md
+          # echo "${{steps.create-change-log.outputs.changelog}}" >> sonic-studio/CHANGELOG.md
+          # git add sonic-studio/CHANGELOG.md
+          # git config user.name github-actions
+          # git config user.email github-actions@github.com
+          # git commit -m "Changelog Commit"
+          # git push --set-upstream destination main --no-verify -f

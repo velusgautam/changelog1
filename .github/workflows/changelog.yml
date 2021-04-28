@@ -1,28 +1,45 @@
+# This workflow will read the PR to master branch and update the CHANGELOG.md file
+# It reads the PR title and body and link any Jira Ticket form the jira keys.
+# Then it pulls the latest CHANGELOG.md from master and append it with new body from PR
+# Then it creates a new commit to the REF Branch where PR is made.
+
+name: CHANGELOG
+
 on:
   pull_request:
-    types: [opened, reopened, synchronize, edited]
-  pull_request_review_comment:
-    types: [created]
-#     branches:
-#       - master
+    types: [opened, edited]
+    branches:
+      - master
 
 jobs:
   create-changelog:
-    name: changelog based on releases
+    name: Changelog based on release PR
     runs-on: ubuntu-latest
     steps:
-      - name: View context attributes
-      - uses: actions/github-script@v4
+      - name: Setup Node
+        uses: actions/setup-node@v2
         with:
-          script: console.log(context)
-            
-      - name: Create Changelog
+          node-version: 14
+
+      - name: Using github scripts
+        uses: actions/github-script@v4
+        
         id: create-change-log
-        uses: velusgautam/changelog1/.github@main
+        with:
+          script: |
+            const title = context.payload.pull_request.title;
+            const jira_base = 'https://discoveryinc.atlassian.net/browse/'
+            const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
+            const releaseBody = context.payload.pull_request.body.replace(/"/g,"'");
+            const releaseBodyWithJiraLinks = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`)
+            const releaseLog = `
+            ## ${title}
 
+            ${releaseBodyWithJiraLinks}
+            `;
+            core.setOutput('changelog', releaseLog);
       - uses: actions/checkout@v2
-
-      - name: Simulate merged branch
+      - name: Create changelog commit
         if: ${{ steps.create-change-log.outputs.changelog != '' }}
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
