@@ -24,12 +24,15 @@ jobs:
           git clone --single-branch --branch main "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git" "$CLONE_DIR"
           ls -la "$CLONE_DIR"
 
-          TARGET_DIR=$(mktemp -d)
-          mv "$CLONE_DIR/.git" "$TARGET_DIR"
+          TARGET_BASE=$(mktemp -d)
+          TARGET_DIRECTORY=sonic-studio
+
+          mv "$CLONE_DIR/.git" "$TARGET_BASE"
 
           echo "Copy contents to target git repository"
-          cp ./CHANGELOG.md "$TARGET_DIR"
-          cd "$TARGET_DIR"
+          mkdir -p "$TARGET_BASE"/"$TARGET_DIRECTORY"
+          cp ./CHANGELOG.md "$TARGET_BASE"/"$TARGET_DIRECTORY"
+          cd "$TARGET_BASE"
 
           echo "git add:"
           git add .
