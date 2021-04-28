@@ -6,14 +6,10 @@ jobs:
     name: sync changelog
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - name: sync changelog
         id: create-change-log
-        # uses: velusgautam/changelog1/.github@main
-
-        uses: actions/checkout@v2
-
-      # - name: sync changelog
-#         if: ${{ steps.create-change-log.outputs.changelog != '' }}
         run: |
           echo "Starts"
           CLONE_DIR=$(mktemp -d)
@@ -21,11 +17,10 @@ jobs:
           DESTINATION_REPOSITORY_NAME=changelogs
           API_TOKEN_GITHUB=${{ secrets.ACCESS_TOKEN }}
           TARGET_BRANCH=main
-        # COMMIT_MESSAGE="SYNC CHANGELOG"
 
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git clone --single-branch --branch master  "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git" "$CLONE_DIR"
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git clone --single-branch --branch main "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git" "$CLONE_DIR"
           ls -la "$CLONE_DIR"
 
           TARGET_DIR=$(mktemp -d)
