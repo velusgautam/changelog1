@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        
+
       - name: sync changelog
         id: create-change-log
         run: |
@@ -18,8 +18,8 @@ jobs:
           API_TOKEN_GITHUB=${{ secrets.ACCESS_TOKEN }}
           TARGET_BRANCH=main
 
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
           git clone --single-branch --branch main "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git" "$CLONE_DIR"
           ls -la "$CLONE_DIR"
 
