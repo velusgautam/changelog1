@@ -23,6 +23,7 @@ jobs:
 
       - name: Using github scripts
         uses: actions/github-script@v4
+        
         id: create-change-log
         with:
           script: |
