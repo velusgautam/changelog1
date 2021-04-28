@@ -1,3 +1,4 @@
+# SYNC to target repository with github ACCESS_TOKEN 
 name: SYNC CHANGELOG
 on:
   pull_request:
@@ -23,8 +24,8 @@ jobs:
           git config --global user.email github-actions@github.com
           git clone --single-branch --branch main "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_NAME.git" "$CLONE_DIR"
           ls -la "$CLONE_DIR"
-          
-          mv "$CLONE_DIR/.git" "$TARGET_BASE"
+       
+          mv "$CLONE_DIR/.git" "$TARGET_BASE"  # hidden/dot files need to be copied seperately
           mv "$CLONE_DIR"/* "$TARGET_BASE"
 
           echo "Copy contents to target git repository"
@@ -39,7 +40,7 @@ jobs:
           git status
 
           echo "git diff-index:"
-          git diff-index --quiet HEAD || git commit --message "SYNC CHANGELOG"
+          git diff-index --quiet HEAD || git commit --message "Sync CHANGELOG.md from $TARGET_DIRECTORY"
 
           echo "git push origin:"
           git push origin --set-upstream "$TARGET_BRANCH"
