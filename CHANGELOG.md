@@ -72,3 +72,10 @@ NEW RELEASE TICKET NAMES
 [FR-123](https://discoveryinc.atlassian.net/browse/FR-123)
 [FR-1234](https://discoveryinc.atlassian.net/browse/FR-1234)
 
+
+## RELEASE SYNC TEST
+
+GITHUB_TOKEN
+GITHUB_TOKEN
+GITHUB_TOKEN
+
