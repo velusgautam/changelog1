@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [opened, synchronize, edited]
+    types: [opened, reopened, synchronize, edited]
   pull_request_review_comment:
     types: [created]
 #     branches:
@@ -11,6 +11,11 @@ jobs:
     name: changelog based on releases
     runs-on: ubuntu-latest
     steps:
+      - name: View context attributes
+      - uses: actions/github-script@v4
+        with:
+          script: console.log(context)
+            
       - name: Create Changelog
         id: create-change-log
         uses: velusgautam/changelog1/.github@main
