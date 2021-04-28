@@ -11,14 +11,15 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: sync changelog
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+          TARGET_DIRECTORY: ${{ github.event.repository.name }}
         run: |
           echo "START SYNC"
           DESTINATION_REPOSITORY_NAME=velusgautam/changelogs
-          API_TOKEN_GITHUB=${{ secrets.ACCESS_TOKEN }}
           TARGET_BRANCH=main
           TARGET_BASE=$(mktemp -d)
-          TARGET_DIRECTORY=${{ github.event.repository.name }}
-
+          
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
           git clone --single-branch --branch main "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_NAME.git" "$TARGET_BASE"
