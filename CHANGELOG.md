@@ -1,4 +1,5 @@
 # Hello CHANGELOG
+
 - [FR-14330] New icon sandbox page
 - FR-13953 Feature toggle info card terminal rights
 - FR-14207 Unable to update active field for CapabilityDefinitions
@@ -7,7 +8,7 @@
 - FR-12691 Allow multiple refunds for VAT
 - FR-12691 Allow multiple refunds for VAT
 
-## Release 2020-04-26 
+## Release 2020-04-26
 
 ##Changes
 
@@ -18,13 +19,13 @@
 - [FR-13815] Update dropzones
 - [FR-12691] Allow multiple refunds for VAT
 
-[FR-14330]: https://discoveryinc.atlassian.net/browse/FR-14330
-[FR-13953]: https://discoveryinc.atlassian.net/browse/FR-13953
-[FR-14207]: https://discoveryinc.atlassian.net/browse/FR-14207
-[FR-10404]: https://discoveryinc.atlassian.net/browse/FR-10404
-[FR-13815]: https://discoveryinc.atlassian.net/browse/FR-13815
-[FR-12691]: https://discoveryinc.atlassian.net/browse/FR-12691
-    
+[fr-14330]: https://discoveryinc.atlassian.net/browse/FR-14330
+[fr-13953]: https://discoveryinc.atlassian.net/browse/FR-13953
+[fr-14207]: https://discoveryinc.atlassian.net/browse/FR-14207
+[fr-10404]: https://discoveryinc.atlassian.net/browse/FR-10404
+[fr-13815]: https://discoveryinc.atlassian.net/browse/FR-13815
+[fr-12691]: https://discoveryinc.atlassian.net/browse/FR-12691
+
 ## Release 2021-04-26
 
 - FR-12875 Make profile name required
@@ -34,8 +35,7 @@
 - FR-14111 show ssid in channel list
 - FR-13878 Find users based on campaign code
 - FR-13878 Find users based on campaign code
--  
-    
+- TEST
 
 ## RELEASE 2021-27-04
 
@@ -46,25 +46,29 @@
 - [FR-13815] Update dropzones
 - [FR-12691] Allow multiple refunds for VAT
 
-[FR-14330]: https://discoveryinc.atlassian.net/browse/FR-14330
-[FR-13953]: https://discoveryinc.atlassian.net/browse/FR-13953
-[FR-14207]: https://discoveryinc.atlassian.net/browse/FR-14207
-[FR-10404]: https://discoveryinc.atlassian.net/browse/FR-10404
-[FR-13815]: https://discoveryinc.atlassian.net/browse/FR-13815
-[FR-12691]: https://discoveryinc.atlassian.net/browse/FR-12691
-    
+[fr-14330]: https://discoveryinc.atlassian.net/browse/FR-14330
+[fr-13953]: https://discoveryinc.atlassian.net/browse/FR-13953
+[fr-14207]: https://discoveryinc.atlassian.net/browse/FR-14207
+[fr-10404]: https://discoveryinc.atlassian.net/browse/FR-10404
+[fr-13815]: https://discoveryinc.atlassian.net/browse/FR-13815
+[fr-12691]: https://discoveryinc.atlassian.net/browse/FR-12691
 
 ## Update README.md
-
-
-    
 
 ## Update README.md
 
 xfvasdf asdfasf
-    
 
-## Sync test
+## RELEASE WITH SYNC
 
-HELO NEW CHANGELOG
-    
+- SYNC CHANGE-LOG COMMIT
+
+
+## RELEASE SYNC TEST 2
+
+NEW RELEASE TICKET NAMES
+NEW RELEASE TICKET NAMES
+NEW RELEASE TICKET NAMES
+[FR-123](https://discoveryinc.atlassian.net/browse/FR-123)
+[FR-1234](https://discoveryinc.atlassian.net/browse/FR-1234)
+
