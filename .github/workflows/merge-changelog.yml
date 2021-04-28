@@ -16,8 +16,8 @@ jobs:
           CLONE_DIR=$(mktemp -d)
           DESTINATION_REPOSITORY_NAME=velusgautam/changelogs
           API_TOKEN_GITHUB=${{ secrets.ACCESS_TOKEN }}
-          USERNAME: ${{ github.actor }}
-          PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME=${{ github.actor }}
+          PASSWORD=${{ secrets.GITHUB_TOKEN }}
           TARGET_BRANCH=main
           TARGET_BASE=$(mktemp -d)
           TARGET_DIRECTORY=${{ github.event.repository.name }}
