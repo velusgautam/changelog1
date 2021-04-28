@@ -24,7 +24,7 @@ jobs:
           git clone --single-branch --branch main "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_NAME.git" "$CLONE_DIR"
           ls -la "$CLONE_DIR"
 
-          mv "$CLONE_DIR/*" "$TARGET_BASE"
+          mv "$CLONE_DIR"/* "$TARGET_BASE"
 
           echo "Copy contents to target git repository"
           mkdir -p "$TARGET_BASE"/"$TARGET_DIRECTORY"
