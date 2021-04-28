@@ -1,31 +1,29 @@
+name: SYNC CHANGELOG
 on:
   pull_request:
     types: [closed]
 
 jobs:
   sync-changelog:
-    name: sync changelog
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: sync changelog
-        id: create-change-log
         run: |
-          echo "Starts"
+          echo "START SYNC"
           CLONE_DIR=$(mktemp -d)
           DESTINATION_REPOSITORY_USERNAME=velusgautam
           DESTINATION_REPOSITORY_NAME=changelogs
           API_TOKEN_GITHUB=${{ secrets.ACCESS_TOKEN }}
           TARGET_BRANCH=main
+          TARGET_BASE=$(mktemp -d)
+          TARGET_DIRECTORY=sonic-studio
 
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
           git clone --single-branch --branch main "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_USERNAME/$DESTINATION_REPOSITORY_NAME.git" "$CLONE_DIR"
           ls -la "$CLONE_DIR"
-
-          TARGET_BASE=$(mktemp -d)
-          TARGET_DIRECTORY=sonic-studio
 
           mv "$CLONE_DIR/.git" "$TARGET_BASE"
 
@@ -45,17 +43,3 @@ jobs:
 
           echo "git push origin:"
           git push origin --set-upstream "$TARGET_BRANCH"
-
-
-
-
-          # git remote add destination git@github.com:velusgautam/changelogs.git
-          # git fetch destination main:main
-          # git switch destination/main
-          # git checkout destination/main sonic-studio/CHANGELOG.md
-          # echo "${{steps.create-change-log.outputs.changelog}}" >> sonic-studio/CHANGELOG.md
-          # git add sonic-studio/CHANGELOG.md
-          # git config user.name github-actions
-          # git config user.email github-actions@github.com
-          # git commit -m "Changelog Commit"
-          # git push --set-upstream destination main --no-verify -f
