@@ -63,3 +63,33 @@ xfvasdf asdfasf
 
 - SYNC CHANGE-LOG COMMIT
 
+
+## RELEASE SYNC TEST 2
+
+NEW RELEASE TICKET NAMES
+NEW RELEASE TICKET NAMES
+NEW RELEASE TICKET NAMES
+[FR-123](https://discoveryinc.atlassian.net/browse/FR-123)
+[FR-1234](https://discoveryinc.atlassian.net/browse/FR-1234)
+
+
+## RELEASE SYNC TEST
+
+GITHUB_TOKEN
+GITHUB_TOKEN
+GITHUB_TOKEN
+
+
+## GITHUB TOKEN TEST
+
+- GITHUB TOKEN TEST
+- GITHUB TOKEN TEST
+[FR-123](https://discoveryinc.atlassian.net/browse/FR-123)
+
+
+## Update README.md
+
+- Update README.md
+- Update README.md
+- [FR-2525](https://discoveryinc.atlassian.net/browse/FR-2525)
+
