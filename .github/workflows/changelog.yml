@@ -28,7 +28,9 @@ jobs:
         env:
           ACTIONS_STEP_DEBUG: true
         run: |
-          diff=hello
+          diff=$(git log master..develop --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d')
+          echo $diff
+          echo "Hello"
           echo "::set-output name=logdiff::$diff"
 
       - name: Using github scripts
@@ -37,11 +39,11 @@ jobs:
         id: create-change-log
         with:
           script: |
-            const myInput = core.getInput('logdiff');
-            const action_fruit = core.getInput('action_fruit');
+            const myInput = core.getInput('steps.merges.outputs.logdiff');
+            
             console.log("=========meregedCommits=========");
             console.log(myInput);
-            console.log(action_fruit);
+           
             console.log("=========meregedCommits=========");
 
             console.log("context.eventName");
