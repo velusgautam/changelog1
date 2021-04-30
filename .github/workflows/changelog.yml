@@ -24,7 +24,7 @@ jobs:
 
       - name: Using github scripts
       - run: npm install execa
-        uses: actions/github-script@v4
+      - uses: actions/github-script@v4
 
         id: create-change-log
         with:
