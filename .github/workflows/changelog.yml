@@ -30,6 +30,10 @@ jobs:
           script: |
             console.log("context.eventName");
             console.log(context.eventName);
+            const diff_url = context.payload.pull_request.diff_url;
+            const result = await github.request(diff_url);
+            console.log("===result===");
+            console.log(result);
             
             const request = {
               owner: context.repo.owner,
@@ -39,7 +43,7 @@ jobs:
               body: `
               # HELLO NEW BODY
               `
-            }
+            };
             
             const response = await github.pulls.update(request);
 
