@@ -35,7 +35,7 @@ jobs:
             const head = process.env.HEAD_BRANCH;
             const base = process.env.BASE_BRANCH;
 
-           const { stdout } = await execa(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`);
+            const { stdout } = await execa(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`);
              
             console.log("=========meregedCommits=========");
             console.log(stdout);
