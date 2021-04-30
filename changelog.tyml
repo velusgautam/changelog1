@@ -7,7 +7,7 @@ name: CHANGELOG
 
 on:
   pull_request:
-  # types: [opened, edited]
+    types: [opened, edited]
     branches:
       - main
 
@@ -27,25 +27,17 @@ jobs:
         id: create-change-log
         with:
           script: |
-            const trigger = core.getInput("trigger", { required: true });
-            const reaction = core.getInput("reaction");
-            console.log("context.eventName");
-            console.log(context.eventName);
-
-            console.log("context.payload");
-            console.log(JSON.stringify(context.payload));
-
             const title = context.payload.pull_request.title;
-          # const jira_base = 'https://discoveryinc.atlassian.net/browse/'
-          # const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
-          # const releaseBody = context.payload.pull_request.body.replace(/"/g,"'");
-          # const releaseBodyWithJiraLinks = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`)
-          # const releaseLog = `
-          # ## ${title}
+            const jira_base = 'https://discoveryinc.atlassian.net/browse/'
+            const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
+            const releaseBody = context.payload.pull_request.body.replace(/"/g,"'");
+            const releaseBodyWithJiraLinks = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`)
+            const releaseLog = `
+            ## ${title}
 
-          # ${releaseBodyWithJiraLinks}
-          # `;
-            core.setOutput('changelog', '');
+            ${releaseBodyWithJiraLinks}
+            `;
+            core.setOutput('changelog', releaseLog);
       - uses: actions/checkout@v2
       - name: Create changelog commit
         if: ${{ steps.create-change-log.outputs.changelog != '' }}
