@@ -40,7 +40,7 @@ jobs:
               # HELLO NEW BODY
               `
             }
-            const octokit = getOctokit(${{ GITHUB_TOKEN}});
+            const octokit = getOctokit(${{ secrets.GITHUB_TOKEN }});
             const response = await octokit.pulls.update(request);
 
             core.info(`Response: ${response.status}`);
