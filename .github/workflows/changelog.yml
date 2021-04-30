@@ -42,18 +42,30 @@ jobs:
           script: |
             console.log("=========meregedCommits=========");
             console.log(process.env.DATA)
-            let body = process.env.DATA;
-            body = body.replace(/||/g,"\n")
+
+            const title = context.payload.pull_request.title;
+            const jira_base = 'https://discoveryinc.atlassian.net/browse/'
+            const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
+
+            const body = process.env.DATA;
+            const releaseBody = body.replace(/||/g,"\n").replace(/"/g,"'");
+            const releaseBodyWithJiraLinks = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`)
+            const releaseLog = `
+            ## ${title}
+
+            ${releaseBodyWithJiraLinks}
+            `;
+
             const request = {
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number,
               title: context.payload.pull_request.title,
               body: `
-              ${body}
+              ${releaseBodyWithJiraLinks}
               `
             };
-
+        
             const response = await github.pulls.update(request);
 
             core.info(`Response: ${response.status}`);
@@ -61,10 +73,7 @@ jobs:
               core.error('Updating the pull request has failed');
             }
 
-            const payload = JSON.stringify(context.payload, undefined, 2)
-            console.log(`The event payload: ${payload}`);
-
-            core.setOutput('changelog', body);
+            core.setOutput('changelog', releaseLog);
 
       - uses: actions/checkout@v2
       - name: Create changelog commit
