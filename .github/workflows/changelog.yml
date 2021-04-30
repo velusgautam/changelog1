@@ -32,7 +32,7 @@ jobs:
           diff=$(git log main..temp --merges --pretty=format:"%h||%b" | sed '/^\s*$/d')
           echo "$diff"
           echo "Hello"
-          echo "::set-output name=logdiff::tr '\n' ' ' < $diff"
+          echo "::set-output name=logdiff::"$diff""
 
       - name: Using github scripts
         uses: actions/github-script@v4
