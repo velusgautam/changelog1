@@ -25,15 +25,10 @@ jobs:
       - name: Create changelog commit
         id: merges
         run: | 
-          diff = $(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"%h||%b" | sed '/^\s*$/d')
+          diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"%h||%b" | sed '/^\s*$/d')
           echo $diff
-          if [ -z "$diff" ]
-          then
-            echo "Doesn't need sync"
-            echo "::set-output name=needs-sync::$diff"
-          fi
-
-      - run: npm install execa
+          echo "::set-output name=needs-sync::$diff"
+          
       - name: Using github scripts
         uses: actions/github-script@v4
 
