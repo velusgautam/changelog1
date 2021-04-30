@@ -32,10 +32,11 @@ jobs:
           script: |
             const execa = require('execa');
             const sep = '||';
-            const head = process.env.HEAD_BRANCH;
-            const base = process.env.BASE_BRANCH;
+            const base = context.payload.pull_request.base.ref
+            const head = context.payload.pull_request.head.ref
+            
 
-            const { stdout } = await execa(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`);
+           const { stdout } = await execa(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`);
              
             console.log("=========meregedCommits=========");
             console.log(stdout);
