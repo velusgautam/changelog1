@@ -7,7 +7,6 @@ name: CHANGELOG
 
 on:
   pull_request:
-  push:
   # types: [opened, edited]
   # branches:
   #    - main
@@ -29,9 +28,8 @@ jobs:
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
           git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
-          diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"%h||%b=eod=" | sed '/^\s*$/d')
+          diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"%b||" | sed '/^\s*$/d')
           echo "$diff"
-          echo "Hello"
           echo "::set-output name=logdiff::"$diff""
 
       - name: Using github scripts
@@ -43,10 +41,9 @@ jobs:
         with:
           script: |
             console.log("=========meregedCommits=========");
-            
             console.log(process.env.DATA)
             let body = process.env.DATA;
-            body = body.replace(/=eod=/g,"\n")
+            body = body.replace(/||/g,"\n")
             const request = {
               owner: context.repo.owner,
               repo: context.repo.repo,
