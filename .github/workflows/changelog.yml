@@ -30,11 +30,26 @@ jobs:
           script: |
             console.log("context.eventName");
             console.log(context.eventName);
+            
+            const request = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              title: context.payload.pull_request.title,
+              body: `
+              # HELLO NEW BODY
+              `
+            }
+            const octokit = getOctokit(${{ GITHUB_TOKEN}});
+            const response = await octokit.pulls.update(request);
+
+            core.info(`Response: ${response.status}`);
+            if (response.status !== 200) {
+              core.error('Updating the pull request has failed');
+            }
 
             const payload = JSON.stringify(context.payload, undefined, 2)
             console.log(`The event payload: ${payload}`);
-
-            const title = context.payload.pull_request.title;
 
             core.setOutput('changelog', '');
       - uses: actions/checkout@v2
