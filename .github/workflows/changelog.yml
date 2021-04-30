@@ -22,12 +22,14 @@ jobs:
         with:
           node-version: 14
       - uses: actions/checkout@v2
-      - name: Create changelog commit
+      - name: Get git logg diff
         id: merges
+        shell: bash
+        env:
+          ACTIONS_STEP_DEBUG: true
         run: |
           diff=hello
-          echo "::set-output name=action_fruit::strawberry"
-          echo "::set-output name=needs-sync::$diff"
+          echo "::set-output name=logdiff::$diff"
 
       - name: Using github scripts
         uses: actions/github-script@v4
@@ -35,7 +37,7 @@ jobs:
         id: create-change-log
         with:
           script: |
-            const myInput = core.getInput('needs-sync');
+            const myInput = core.getInput('logdiff');
             const action_fruit = core.getInput('action_fruit');
             console.log("=========meregedCommits=========");
             console.log(myInput);
