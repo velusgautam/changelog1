@@ -25,7 +25,7 @@ jobs:
       - name: Create changelog commit
         id: merges
         run: | 
-          diff=$(git log --oneline main..test-comment --merges --pretty=format:"%h||%b" | sed '/^\s*$/d')
+          diff=$(git log --oneline main ..test-comment --merges --pretty=format:"%h||%b" | sed '/^\s*$/d')
           echo $diff
           echo "::set-output name=needs-sync::$diff"
           
