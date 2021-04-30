@@ -28,8 +28,8 @@ jobs:
         env:
           ACTIONS_STEP_DEBUG: true
         run: |
-          diff=$(git log master..develop --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d')
-          echo $diff
+          diff=$(git log $GITHUB_BASE_REF --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d')
+          echo "$diff"
           echo "Hello"
           echo "::set-output name=logdiff::$diff"
 
