@@ -21,6 +21,17 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14
+      - uses: actions/checkout@v2
+      - name: Create changelog commit
+        id: merges
+        run: | 
+          diff = $(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"%h||%b" | sed '/^\s*$/d')
+          echo $diff
+          if [ -z "$diff" ]
+          then
+            echo "Doesn't need sync"
+            echo "::set-output name=needs-sync::$diff"
+          fi
 
       - run: npm install execa
       - name: Using github scripts
@@ -30,17 +41,9 @@ jobs:
         with:
           script: |
             const execa = require('execa');
-            const sep = '||';
-            const base = context.payload.pull_request.base.ref
-            const head = context.payload.pull_request.head.ref
-
-            await execa(`git fetch origin ${base}:${base}`);
-            await execa(`git fetch origin ${head}:${head}`);
-
-            const { stdout } = await execa(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`);
-             
+            const myInput = core.getInput('needs-sync', { required: true });
             console.log("=========meregedCommits=========");
-            console.log(stdout);
+            console.log(myInput);
             console.log("=========meregedCommits=========");
 
             console.log("context.eventName");
