@@ -28,8 +28,8 @@ jobs:
         shell: bash
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
-          git fetch origin temp:temp
-          diff=$(git log main..temp --merges --pretty=format:"%h||%b" | sed '/^\s*$/d')
+          git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
+          diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"%h||%b" | sed '/^\s*$/d')
           echo "$diff"
           echo "Hello"
           echo "::set-output name=logdiff::"$diff""
