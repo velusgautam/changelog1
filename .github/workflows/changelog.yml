@@ -43,7 +43,7 @@ jobs:
         with:
           script: |
             const myInput = core.getInput('steps.merges.outputs.logdiff');
-            const myInput1 = core.getInput('logdiff');
+            const myInput1 = core.getInput('merges');
             console.log("=========meregedCommits=========");
             console.log(myInput);
             console.log(myInput1);
