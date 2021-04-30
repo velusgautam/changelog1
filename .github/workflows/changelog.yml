@@ -8,9 +8,10 @@ name: CHANGELOG
 on:
   pull_request:
   # types: [opened, edited]
-    branches:
-      - main
-
+  # branches:
+  #    - main
+  issue_comment:
+    types: [created]
 jobs:
   create-changelog:
     name: Changelog based on release PR
@@ -22,18 +23,52 @@ jobs:
           node-version: 14
 
       - name: Using github scripts
+      - run: npm install execa
         uses: actions/github-script@v4
-        
+
         id: create-change-log
         with:
           script: |
+            const execa = require('execa');
+            const sep = '||';
+            const head = process.env.HEAD_BRANCH;
+            const base = process.env.BASE_BRANCH;
+
+            const meregedCommits = String(execSync(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`)).split('\n')
+              .map(l => {
+                const [hash, message] = l.split(sep);
+                return { value: hash, name: message, short: hash };
+            });
+            console.log("=========meregedCommits=========");
+            console.log(meregedCommits);
+            console.log("=========meregedCommits=========");
+
             console.log("context.eventName");
             console.log(context.eventName);
+            const diff_url = context.payload.pull_request.diff_url;
+            const result = await github.request(diff_url);
+            console.log("===result===");
+            console.log(result);
+
+            const request = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              title: context.payload.pull_request.title,
+              body: `
+              # HELLO NEW BODY
+              `
+            };
+
+            const response = await github.pulls.update(request);
+
+            core.info(`Response: ${response.status}`);
+            if (response.status !== 200) {
+              core.error('Updating the pull request has failed');
+            }
 
             const payload = JSON.stringify(context.payload, undefined, 2)
             console.log(`The event payload: ${payload}`);
-
-            const title = context.payload.pull_request.title;
 
             core.setOutput('changelog', '');
       - uses: actions/checkout@v2
