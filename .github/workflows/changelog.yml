@@ -47,6 +47,7 @@ jobs:
             console.log("=========meregedCommits=========");
             console.log(myInput);
             console.log(myInput1);
+            console.log(`::${steps.merges.outputs.logdiff}::`)
             console.log("=========meregedCommits=========");
 
             console.log("context.eventName");
