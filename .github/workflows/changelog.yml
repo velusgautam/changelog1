@@ -27,8 +27,6 @@ jobs:
         id: create-change-log
         with:
           script: |
-            const trigger = core.getInput("trigger", { required: true });
-            const reaction = core.getInput("reaction");
             console.log("context.eventName");
             console.log(context.eventName);
 
