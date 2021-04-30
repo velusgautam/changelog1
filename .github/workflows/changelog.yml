@@ -32,8 +32,8 @@ jobs:
             console.log("context.eventName");
             console.log(context.eventName);
 
-            console.log("context.payload");
-            console.log(JSON.stringify(context.payload));
+            const payload = JSON.stringify(context.payload, undefined, 2)
+            console.log(`The event payload: ${payload}`);
 
             const title = context.payload.pull_request.title;
           # const jira_base = 'https://discoveryinc.atlassian.net/browse/'
