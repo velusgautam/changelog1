@@ -48,7 +48,7 @@ jobs:
             const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
 
             const body = process.env.DATA;
-            const releaseBody = body.replace(/||/g,"\n").replace(/"/g,"'");
+            const releaseBody = body.replace(/\|\|/g,"\n").replace(/"/g,"'");
             const releaseBodyWithJiraLinks = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`)
             const releaseLog = `
             ## ${title}
