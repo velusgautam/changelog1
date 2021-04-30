@@ -22,9 +22,10 @@ jobs:
         with:
           node-version: 14
 
-      - name: Using github scripts
+      
       - run: npm install execa
-      - uses: actions/github-script@v4
+      - name: Using github scripts
+        uses: actions/github-script@v4
 
         id: create-change-log
         with:
