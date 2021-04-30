@@ -30,8 +30,8 @@ jobs:
           ACTIONS_STEP_DEBUG: true
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
-          git fetch origin $HEAD_BRANCH:$HEAD_BRANCH
-          diff=$(git log --merges --pretty=format:"%h${sep}%b" $GITHUB_BASE_REF..$HEAD_BRANCH | sed '/^\s*$/d')
+          git fetch origin temp:temp
+          diff=$(git log main..temp --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d')
           echo "$diff"
           echo "Hello"
           echo "::set-output name=logdiff::$diff"
