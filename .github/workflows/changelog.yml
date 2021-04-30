@@ -24,18 +24,19 @@ jobs:
       - uses: actions/checkout@v2
       - name: Create changelog commit
         id: merges
-        run: | 
-          diff=$(git log --pretty=format:'%h %s' --graph --merges | sed '/^s*$/d')
-          echo $diff
+        run: |
+          diff=hello
+          echo "::set-output name=action_fruit::strawberry"
           echo "::set-output name=needs-sync::$diff"
-          
+
       - name: Using github scripts
         uses: actions/github-script@v4
 
         id: create-change-log
         with:
           script: |
-            const myInput = core.getInput('needs-sync', { required: true });
+            const myInput = core.getInput('needs-sync');
+            const myInput = core.getInput('action_fruit');
             console.log("=========meregedCommits=========");
             console.log(myInput);
             console.log("=========meregedCommits=========");
