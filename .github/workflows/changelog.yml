@@ -36,15 +36,6 @@ jobs:
             console.log(JSON.stringify(context.payload));
 
             const title = context.payload.pull_request.title;
-          # const jira_base = 'https://discoveryinc.atlassian.net/browse/'
-          # const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
-          # const releaseBody = context.payload.pull_request.body.replace(/"/g,"'");
-          # const releaseBodyWithJiraLinks = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`)
-          # const releaseLog = `
-          # ## ${title}
-
-          # ${releaseBodyWithJiraLinks}
-          # `;
             core.setOutput('changelog', '');
       - uses: actions/checkout@v2
       - name: Create changelog commit
