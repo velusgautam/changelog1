@@ -63,3 +63,43 @@ xfvasdf asdfasf
 
 - SYNC CHANGE-LOG COMMIT
 
+
+## RELEASE SYNC TEST 2
+
+NEW RELEASE TICKET NAMES
+NEW RELEASE TICKET NAMES
+NEW RELEASE TICKET NAMES
+[FR-123](https://discoveryinc.atlassian.net/browse/FR-123)
+[FR-1234](https://discoveryinc.atlassian.net/browse/FR-1234)
+
+
+## RELEASE SYNC TEST
+
+GITHUB_TOKEN
+GITHUB_TOKEN
+GITHUB_TOKEN
+
+
+## GITHUB TOKEN TEST
+
+- GITHUB TOKEN TEST
+- GITHUB TOKEN TEST
+[FR-123](https://discoveryinc.atlassian.net/browse/FR-123)
+
+
+## Update README.md
+
+- Update README.md
+- Update README.md
+- [FR-2525](https://discoveryinc.atlassian.net/browse/FR-2525)
+
+
+## RELEASE 2021-04-28b
+
+- [FR-14330](https://discoveryinc.atlassian.net/browse/FR-14330) New icon sandbox page
+- [FR-13953](https://discoveryinc.atlassian.net/browse/FR-13953) Feature toggle info card terminal rights
+- [FR-14207](https://discoveryinc.atlassian.net/browse/FR-14207) Unable to update active field for CapabilityDefinitions
+- [FR-10404](https://discoveryinc.atlassian.net/browse/FR-10404) confirm dialog and information dialog design changes batch 1
+- [FR-13815](https://discoveryinc.atlassian.net/browse/FR-13815) Update dropzones
+- [FR-12691](https://discoveryinc.atlassian.net/browse/FR-12691) Allow multiple refunds for VAT
+

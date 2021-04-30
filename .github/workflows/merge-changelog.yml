@@ -1,3 +1,4 @@
+# SYNC to target repository with github ACCESS_TOKEN 
 name: SYNC CHANGELOG
 on:
   pull_request:
@@ -10,22 +11,19 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: sync changelog
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+          TARGET_DIRECTORY: ${{ github.event.repository.name }}
         run: |
           echo "START SYNC"
-          CLONE_DIR=$(mktemp -d)
           DESTINATION_REPOSITORY_NAME=velusgautam/changelogs
-          API_TOKEN_GITHUB=${{ secrets.ACCESS_TOKEN }}
           TARGET_BRANCH=main
           TARGET_BASE=$(mktemp -d)
-          TARGET_DIRECTORY=sonic-studio
-
+          
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
-          git clone --single-branch --branch main "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_NAME.git" "$CLONE_DIR"
-          ls -la "$CLONE_DIR"
-
-          mv "$CLONE_DIR/.git" "$TARGET_BASE"
-
+          git clone --single-branch --branch main "https://$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY_NAME.git" "$TARGET_BASE"
+       
           echo "Copy contents to target git repository"
           mkdir -p "$TARGET_BASE"/"$TARGET_DIRECTORY"
           cp ./CHANGELOG.md "$TARGET_BASE"/"$TARGET_DIRECTORY"
@@ -38,7 +36,7 @@ jobs:
           git status
 
           echo "git diff-index:"
-          git diff-index --quiet HEAD || git commit --message "SYNC CHANGELOG"
+          git diff-index --quiet HEAD || git commit --message "Sync CHANGELOG.md from $TARGET_DIRECTORY"
 
           echo "git push origin:"
           git push origin --set-upstream "$TARGET_BRANCH"
