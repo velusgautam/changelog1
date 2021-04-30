@@ -36,9 +36,10 @@ jobs:
         with:
           script: |
             const myInput = core.getInput('needs-sync');
-            const myInput = core.getInput('action_fruit');
+            const action_fruit = core.getInput('action_fruit');
             console.log("=========meregedCommits=========");
             console.log(myInput);
+            console.log(action_fruit);
             console.log("=========meregedCommits=========");
 
             console.log("context.eventName");
