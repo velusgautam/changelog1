@@ -10,8 +10,8 @@ on:
   # types: [opened, edited]
   # branches:
   #    - main
-  issue_comment:
-    types: [created]
+  # issue_comment:
+  #  types: [created]
 jobs:
   create-changelog:
     name: Changelog based on release PR
@@ -71,6 +71,7 @@ jobs:
             console.log(`The event payload: ${payload}`);
 
             core.setOutput('changelog', '');
+            
       - uses: actions/checkout@v2
       - name: Create changelog commit
         if: ${{ steps.create-change-log.outputs.changelog != '' }}
