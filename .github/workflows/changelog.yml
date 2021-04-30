@@ -35,13 +35,10 @@ jobs:
             const head = process.env.HEAD_BRANCH;
             const base = process.env.BASE_BRANCH;
 
-            const meregedCommits = String(execSync(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`)).split('\n')
-              .map(l => {
-                const [hash, message] = l.split(sep);
-                return { value: hash, name: message, short: hash };
-            });
+           const { stdout } = await execa(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`);
+             
             console.log("=========meregedCommits=========");
-            console.log(meregedCommits);
+            console.log(stdout);
             console.log("=========meregedCommits=========");
 
             console.log("context.eventName");
