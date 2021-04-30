@@ -26,8 +26,6 @@ jobs:
       - name: Get git logg diff
         id: merges
         shell: bash
-        env:
-          ACTIONS_STEP_DEBUG: true
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
           git fetch origin temp:temp
@@ -40,6 +38,8 @@ jobs:
         uses: actions/github-script@v4
 
         id: create-change-log
+        env:
+          DATA: ${{ steps.merges.outputs.logdiff }}
         with:
           script: |
             const myInput = core.getInput('steps.merges.outputs.logdiff');
@@ -47,7 +47,7 @@ jobs:
             console.log("=========meregedCommits=========");
             console.log(myInput);
             console.log(myInput1);
-            console.log(`::${steps.merges.outputs.logdiff}::`)
+            console.log(process.env.DATA)
             console.log("=========meregedCommits=========");
 
             console.log("context.eventName");
