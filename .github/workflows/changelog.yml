@@ -31,7 +31,7 @@ jobs:
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
           git fetch origin $HEAD_BRANCH:$HEAD_BRANCH
-          diff=$(git log $GITHUB_BASE_REF..$HEAD_BRANCH --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d')
+          diff=$(git log --merges $GITHUB_BASE_REF..$HEAD_BRANCH --pretty=format:"%h${sep}%b" | sed '/^\s*$/d')
           echo "$diff"
           echo "Hello"
           echo "::set-output name=logdiff::$diff"
@@ -43,10 +43,10 @@ jobs:
         with:
           script: |
             const myInput = core.getInput('steps.merges.outputs.logdiff');
-            
+            const myInput1 = core.getInput('logdiff');
             console.log("=========meregedCommits=========");
             console.log(myInput);
-           
+            console.log(myInput1);
             console.log("=========meregedCommits=========");
 
             console.log("context.eventName");
