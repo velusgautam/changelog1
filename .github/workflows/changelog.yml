@@ -29,7 +29,7 @@ jobs:
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
           git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
-          diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"%h||%b" | sed '/^\s*$/d')
+          diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"%h||%b=eod=" | sed '/^\s*$/d')
           echo "$diff"
           echo "Hello"
           echo "::set-output name=logdiff::"$diff""
@@ -42,28 +42,18 @@ jobs:
           DATA: ${{ steps.merges.outputs.logdiff }}
         with:
           script: |
-            const myInput = core.getInput('steps.merges.outputs.logdiff');
-            const myInput1 = core.getInput('merges');
             console.log("=========meregedCommits=========");
-            console.log(myInput);
-            console.log(myInput1);
+            
             console.log(process.env.DATA)
-            console.log("=========meregedCommits=========");
-
-            console.log("context.eventName");
-            console.log(context.eventName);
-            const diff_url = context.payload.pull_request.diff_url;
-            const result = await github.request(diff_url);
-            console.log("===result===");
-            console.log(result);
-
+            let body = process.env.DATA;
+            body = body.replace(/=eod=/g,"\n")
             const request = {
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number,
               title: context.payload.pull_request.title,
               body: `
-              # HELLO NEW BODY
+              ${body}
               `
             };
 
@@ -77,7 +67,7 @@ jobs:
             const payload = JSON.stringify(context.payload, undefined, 2)
             console.log(`The event payload: ${payload}`);
 
-            core.setOutput('changelog', '');
+            core.setOutput('changelog', body);
 
       - uses: actions/checkout@v2
       - name: Create changelog commit
