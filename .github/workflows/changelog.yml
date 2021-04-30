@@ -23,18 +23,33 @@ jobs:
           node-version: 14
 
       - name: Using github scripts
+      - run: npm install execa
         uses: actions/github-script@v4
-        
+
         id: create-change-log
         with:
           script: |
+            const execa = require('execa');
+            const sep = '||';
+            const head = process.env.HEAD_BRANCH;
+            const base = process.env.BASE_BRANCH;
+
+            const meregedCommits = String(execSync(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`)).split('\n')
+              .map(l => {
+                const [hash, message] = l.split(sep);
+                return { value: hash, name: message, short: hash };
+            });
+            console.log("=========meregedCommits=========");
+            console.log(meregedCommits);
+            console.log("=========meregedCommits=========");
+
             console.log("context.eventName");
             console.log(context.eventName);
             const diff_url = context.payload.pull_request.diff_url;
             const result = await github.request(diff_url);
             console.log("===result===");
             console.log(result);
-            
+
             const request = {
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -44,7 +59,7 @@ jobs:
               # HELLO NEW BODY
               `
             };
-            
+
             const response = await github.pulls.update(request);
 
             core.info(`Response: ${response.status}`);
