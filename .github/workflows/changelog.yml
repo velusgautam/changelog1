@@ -22,7 +22,6 @@ jobs:
         with:
           node-version: 14
 
-      
       - run: npm install execa
       - name: Using github scripts
         uses: actions/github-script@v4
@@ -34,7 +33,9 @@ jobs:
             const sep = '||';
             const base = context.payload.pull_request.base.ref
             const head = context.payload.pull_request.head.ref
-            
+
+            await execa(`git fetch origin ${base}:${base}`);
+            await execa(`git fetch origin ${head}:${head}`);
 
             const { stdout } = await execa(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`);
              
@@ -70,7 +71,7 @@ jobs:
             console.log(`The event payload: ${payload}`);
 
             core.setOutput('changelog', '');
-            
+
       - uses: actions/checkout@v2
       - name: Create changelog commit
         if: ${{ steps.create-change-log.outputs.changelog != '' }}
