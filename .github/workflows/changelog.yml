@@ -36,7 +36,7 @@ jobs:
             const head = context.payload.pull_request.head.ref
             
 
-           const { stdout } = await execa(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`);
+            const { stdout } = await execa(`git log ${base}..${head} --merges --pretty=format:"%h${sep}%b" | sed '/^\s*$/d'`);
              
             console.log("=========meregedCommits=========");
             console.log(stdout);
