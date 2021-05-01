@@ -106,7 +106,7 @@ GITHUB_TOKEN
 
 ## changelog test
 
-[[FR-15456](https://discoveryinc.atlassian.net/browse/FR-15456)] Another new change for test
- [[FR-45456](https://discoveryinc.atlassian.net/browse/FR-45456)] Sync ticket for change log
- MERGE COMMIT 1
+-   [[FR-15456](https://discoveryinc.atlassian.net/browse/FR-15456)] Another new change for test
+-  [[FR-45456](https://discoveryinc.atlassian.net/browse/FR-45456)] Sync ticket for change log
+-  MERGE COMMIT 1
 
