@@ -77,15 +77,17 @@ jobs:
 
             ${releaseBody}
             `;
+
+            const requestBody = `
+            ${releaseBody}
+            `
             if(isNewRelease){
               const request = {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: context.payload.pull_request.number,
                 title: context.payload.pull_request.title,
-                body: `
-                ${releaseBody}
-                `
+                body: requestBody
               };
 
               const response = await github.pulls.update(request);
