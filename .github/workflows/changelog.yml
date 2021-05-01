@@ -1,38 +1,27 @@
-# This workflow will read the PR to master branch and update the CHANGELOG.md file
-# It reads the PR title and body and link any Jira Ticket form the jira keys.
-# Then it pulls the latest CHANGELOG.md from master and append it with new body from PR
-# Then it creates a new commit to the REF Branch where PR is made.
+# This workflow will SET the PR body based on merge commit diff
+# It reads the PR title, body then it links the Jira Ticket form the jira keys.
+# Then it pulls the latest CHANGELOG.md from master and append it with new changes from PR
+# Then it commits CHANGELOG.md to the REFERENCE Branch in the PR.
 
 name: CHANGELOG
 
 on:
   pull_request:
     types: [opened, reopened, edited]
-  # branches:
-  #    - main
-  # issue_comment:
-  #  types: [created]
 jobs:
   create-changelog:
     name: Changelog based on release PR
     runs-on: ubuntu-latest
     steps:
-      # - name: Setup Node
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: 14
       - name: Checkout Project
         uses: actions/checkout@v2
+
       - name: Get git log diff from merged branches
-        id: merges
+        id: merge-log
         shell: bash
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github.event.action) }}
         if: github.event.action == 'reopened' || github.event.action == 'opened'
         run: |
-          echo "$GITHUB_CONTEXT"
-          git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
-          git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
+          git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
           diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"- %b-eol-" | sed '/^\s*$/d')
           echo "$diff"
           echo "::set-output name=logdiff::"$diff""
@@ -41,36 +30,26 @@ jobs:
         uses: actions/github-script@v4
         id: create-change-log
         env:
-          LOGS: ${{ steps.merges.outputs.logdiff }}
+          LOGS: ${{ steps.merge-log.outputs.logdiff }}
         with:
           script: |
-            console.log("=========Mereged Commits START =========");
-            console.log(process.env.LOGS)
-            console.log("=========Mereged Commits END =========");
-            const isNewRelease = (context.payload.action === "reopened" || context.payload.action === "opened");
-            console.log("=========isNewRelease START =========");
-            console.log(isNewRelease)
-            console.log("=========isNewRelease END =========");
-
             const title = context.payload.pull_request.title;
             const jira_base = 'https://discoveryinc.atlassian.net/browse/'
-            const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
+            const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g; # regex to find the jira keys
 
             let body = '';
+            const isNewRelease = (context.payload.action === "reopened" || context.payload.action === "opened");            
             if(isNewRelease){
               body = process.env.LOGS;
             }else{
-              body = context.payload.pull_request.body.replace(/"/g,"'");
+              body = context.payload.pull_request.body;
             }
             let releaseBody = body.replace(/- -eol-/g,"").trim().replace(/-eol-/g,"\n").replace(/"/g,"'");
             if(!releaseBody.includes(jira_base)){
              releaseBody = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`);
             }
 
-            console.log("=========releaseBody START =========");
-            console.log(releaseBody)
-            console.log("=========releaseBody END =========");
-
+            core.info(`RELEASE PR BODY DATA: ${releaseBody}`);
 
             const releaseLog = `
             ## ${title}
@@ -90,20 +69,19 @@ jobs:
                 body: requestBody
               };
 
-              const response = await github.pulls.update(request);
-
-              core.info(`Response: ${response.status}`);
-              if (response.status !== 200) {
-                core.error('Updating the pull request has failed');
+              const response = await github.pulls.update(request);              
+              if (response.status === 200) {
+                core.info(`UPDATE PR BODY: Success`);
+              }else{
+                core.error('UPDATE PR BODY: Failed');
               }
             }
 
             core.setOutput('changelog', releaseLog);
 
-      - uses: actions/checkout@v2
+      # - uses: actions/checkout@v2
       - name: Create changelog commit
         run: |
-          git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
           git switch $GITHUB_HEAD_REF
           git checkout $GITHUB_BASE_REF CHANGELOG.md
           echo "${{steps.create-change-log.outputs.changelog}}" >> CHANGELOG.md
