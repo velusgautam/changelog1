@@ -104,12 +104,8 @@ GITHUB_TOKEN
 - [FR-12691](https://discoveryinc.atlassian.net/browse/FR-12691) Allow multiple refunds for VAT
 
 
-## Change Log Test
+## Change Log Test 1
 
-- 
- - 
- - 
- - MERGE COMMIT 1
- - 
- -
+- MERGE COMMIT 1
+
 
