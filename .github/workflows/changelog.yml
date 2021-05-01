@@ -28,7 +28,7 @@ jobs:
         shell: bash
         env:
           GITHUB_CONTEXT: ${{ toJson(github.event.action) }}
-        if: github.event.action == 'synchronize'
+        if: github.event.action == 'edited' || github.event.action == 'opened'
         run: |
           echo "$GITHUB_CONTEXT"
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
@@ -60,12 +60,14 @@ jobs:
             }else{
               body = context.payload.pull_request.body.replace(/"/g,"'");
             }
-            const releaseBody = body.replace(/-eol-/g,"\n").replace(/"/g,"'").trim();
-            const releaseBodyWithJiraLinks = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`)
+            let releaseBody = body.replace(/-eol-/g,"\n").replace(/"/g,"'").trim();
+            if(!releaseBody.includes(jira_base)){
+             releaseBody = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`);
+            }
             const releaseLog = `
             ## ${title}
 
-            ${releaseBodyWithJiraLinks}
+            ${releaseBody}
             `;
             if(isNewRelease){
               const request = {
@@ -74,7 +76,7 @@ jobs:
                 pull_number: context.payload.pull_request.number,
                 title: context.payload.pull_request.title,
                 body: `
-                ${releaseBodyWithJiraLinks}
+                ${releaseBody}
                 `
               };
 
