@@ -26,8 +26,11 @@ jobs:
       - name: Get git log diff from merged branches
         id: merges
         shell: bash
-        if: ${{ github.event.payload.pull_request.action == opened || github.event.payload.pull_request.action == reopened }}
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        # if: ${{ github.event.payload.pull_request.action == opened || github.event.payload.pull_request.action == reopened }}
         run: |
+          echo "$GITHUB_CONTEXT"
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
           git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
           diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"- %b-eol-" | sed '/^\s*$/d')
