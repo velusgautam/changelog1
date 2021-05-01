@@ -62,7 +62,7 @@ jobs:
             }else{
               body = context.payload.pull_request.body.replace(/"/g,"'");
             }
-            let releaseBody = body.replace(/-eol-/g,"\n").replace(/"/g,"'").trim();
+            let releaseBody = body.replace(/- -eol-/g,"").replace(/-eol-/g,"\n").replace(/"/g,"'");
             if(!releaseBody.includes(jira_base)){
              releaseBody = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`);
             }
