@@ -8,6 +8,8 @@ name: CHANGELOG
 on:
   pull_request:
     types: [opened, reopened, edited]
+    branches:[main]
+    
 jobs:
   create-changelog:
     name: Changelog based on release PR
