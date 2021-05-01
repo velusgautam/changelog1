@@ -104,7 +104,7 @@ GITHUB_TOKEN
 - [FR-12691](https://discoveryinc.atlassian.net/browse/FR-12691) Allow multiple refunds for VAT
 
 
-## changelog test 22
+## changelog test
 
 [[[FR-15456](https://discoveryinc.atlassian.net/browse/FR-15456)](https://discoveryinc.atlassian.net/browse/[FR-15456](https://discoveryinc.atlassian.net/browse/FR-15456))] Another new change for test
  [[[FR-45456](https://discoveryinc.atlassian.net/browse/FR-45456)](https://discoveryinc.atlassian.net/browse/[FR-45456](https://discoveryinc.atlassian.net/browse/FR-45456))] Sync ticket for change log
