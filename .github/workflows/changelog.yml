@@ -27,8 +27,8 @@ jobs:
         id: merges
         shell: bash
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        if: ${{ github.event.pull_request.action == 'synchronize' }}
+          GITHUB_CONTEXT: ${{ github.event.pull_request.action }}
+        # if: ${{ github.event.pull_request.action == 'synchronize' }}
         run: |
           echo "$GITHUB_CONTEXT"
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
