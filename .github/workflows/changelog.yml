@@ -47,11 +47,8 @@ jobs:
             console.log("=========Mereged Commits START =========");
             console.log(process.env.LOGS)
             console.log("=========Mereged Commits END =========");
-            const isNewRelease = (context.payload.pull_request.action === "edited" || context.payload.pull_request.action === "opened");
+            const isNewRelease = (context.payload.action === "edited" || context.payload.action === "opened");
             console.log("=========isNewRelease START =========");
-            console.log(context.payload)
-            const payload = JSON.stringify(context.payload, undefined, 2)
-            console.log(`The event payload: ${payload}`);
             console.log(isNewRelease)
             console.log("=========isNewRelease END =========");
 
