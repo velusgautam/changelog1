@@ -37,7 +37,7 @@ jobs:
           script: |
             const title = context.payload.pull_request.title;
             const jira_base = 'https://discoveryinc.atlassian.net/browse/'
-            const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g; # regex to find the jira keys
+            const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
 
             let body = '';
             const isNewRelease = (context.payload.action === "reopened" || context.payload.action === "opened");            
