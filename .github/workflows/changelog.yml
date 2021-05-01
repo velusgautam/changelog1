@@ -108,5 +108,5 @@ jobs:
           git add CHANGELOG.md
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git commit -m "Changelog Commit"
+          git diff-index --quiet HEAD || git commit -m "Changelog Commit"
           git push --set-upstream origin $GITHUB_HEAD_REF --no-verify
