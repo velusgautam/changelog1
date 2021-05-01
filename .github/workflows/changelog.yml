@@ -28,7 +28,7 @@ jobs:
         shell: bash
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        if: ${{ github.event.action == "synchronize" }}
+        if: ${{ github.event.action == synchronize }}
         run: |
           echo "$GITHUB_CONTEXT"
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
@@ -47,7 +47,7 @@ jobs:
             console.log("=========Mereged Commits START =========");
             console.log(process.env.LOGS)
             console.log("=========Mereged Commits END =========");
-            const isNewRelease = (context.payload.pull_request.action==="opened" || context.payload.pull_request.action==="reopened") && process.env.LOGS !== "";
+            const isNewRelease = (context.payload.pull_request.action==="synchronize" || context.payload.pull_request.action==="opened" || context.payload.pull_request.action==="reopened") && process.env.LOGS !== "";
 
 
             const title = context.payload.pull_request.title;
