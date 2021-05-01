@@ -27,7 +27,7 @@ jobs:
         id: merges
         shell: bash
         env:
-          GITHUB_CONTEXT: ${{ github.event.pull_request.action }}
+          GITHUB_CONTEXT: ${{ github.event.pull_request }}
         # if: ${{ github.event.pull_request.action == 'synchronize' }}
         run: |
           echo "$GITHUB_CONTEXT"
