@@ -26,7 +26,7 @@ jobs:
       - name: Get git log diff from merged branches
         id: merges
         shell: bash
-        if: ${{ github.event.action == opened || github.event.action == reopened }}
+        if: ${{ github.event.payload.pull_request.action == opened || github.event.payload.pull_request.action == reopened }}
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
           git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
