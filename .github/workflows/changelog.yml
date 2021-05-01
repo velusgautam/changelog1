@@ -7,7 +7,7 @@ name: CHANGELOG
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    types: [opened, reopened, edited]
   # branches:
   #    - main
   # issue_comment:
@@ -28,7 +28,7 @@ jobs:
         shell: bash
         env:
           GITHUB_CONTEXT: ${{ toJson(github.event.action) }}
-        if: github.event.action == 'edited' || github.event.action == 'opened'
+        if: github.event.action == 'reopened' || github.event.action == 'opened'
         run: |
           echo "$GITHUB_CONTEXT"
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
@@ -47,7 +47,7 @@ jobs:
             console.log("=========Mereged Commits START =========");
             console.log(process.env.LOGS)
             console.log("=========Mereged Commits END =========");
-            const isNewRelease = (context.payload.action === "edited" || context.payload.action === "opened");
+            const isNewRelease = (context.payload.action === "reopened" || context.payload.action === "opened");
             console.log("=========isNewRelease START =========");
             console.log(isNewRelease)
             console.log("=========isNewRelease END =========");
@@ -62,7 +62,7 @@ jobs:
             }else{
               body = context.payload.pull_request.body.replace(/"/g,"'");
             }
-            let releaseBody = body.replace(/- -eol-/g,"").replace(/-eol-/g,"\n").replace(/"/g,"'");
+            let releaseBody = body.replace(/- -eol-/g,"").trim().replace(/-eol-/g,"\n").replace(/"/g,"'");
             if(!releaseBody.includes(jira_base)){
              releaseBody = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`);
             }
