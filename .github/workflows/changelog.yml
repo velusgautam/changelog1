@@ -18,12 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v1
         with:
           node-version: 14
       - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
+#         with:
+#           persist-credentials: false
       - name: Get git logg diff
         id: merges
         shell: bash
@@ -77,9 +77,9 @@ jobs:
 
             core.setOutput('changelog', releaseLog);
 
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
+#       - uses: actions/checkout@v2
+#         with:
+#           persist-credentials: false
       - name: Create changelog commit
         if: ${{ steps.create-change-log.outputs.changelog != '' }}
         run: |
