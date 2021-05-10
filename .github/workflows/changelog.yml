@@ -87,7 +87,7 @@ jobs:
 
               const response = await github.pulls.update(request);              
               if (response.status === 200) {
-                core.info(`UPDATE PR BODY: Success`);
+                core.info('UPDATE PR BODY: Success');
               }else{
                 core.error('UPDATE PR BODY: Failed');
               }
@@ -100,7 +100,7 @@ jobs:
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
           git switch $GITHUB_HEAD_REF
           git checkout $GITHUB_BASE_REF CHANGELOG.md
-          echo -e "$(head -n 1 CHANGELOG.md)${{steps.create-change-log.outputs.changelog}}$(tail -n +2  CHANGELOG.md)" > CHANGELOG.md
+          echo "${{steps.create-change-log.outputs.changelog}}" >> CHANGELOG.md
           git add CHANGELOG.md
           git config user.name github-actions
           git config user.email github-actions@github.com
