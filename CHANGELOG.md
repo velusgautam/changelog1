@@ -103,3 +103,8 @@ GITHUB_TOKEN
 - [FR-13815](https://discoveryinc.atlassian.net/browse/FR-13815) Update dropzones
 - [FR-12691](https://discoveryinc.atlassian.net/browse/FR-12691) Allow multiple refunds for VAT
 
+
+## Change Log Test
+
+- MERGE COMMIT 1
+
