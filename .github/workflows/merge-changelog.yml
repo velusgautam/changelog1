@@ -12,7 +12,7 @@ jobs:
 
       - name: sync changelog
         env:
-          API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.ACTION_TOKEN }}
           TARGET_DIRECTORY: ${{ github.event.repository.name }}
         run: |
           echo "START SYNC"
