@@ -40,58 +40,60 @@ jobs:
         with:
           script: |
             const title = context.payload.pull_request.title;
-            const jira_base = 'https://discoveryinc.atlassian.net/browse/'
-            const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
+            const jira_base = 'https://discoveryinc.atlassian.net/browse/';
+            const fr_regex = /fr-\d+/gi;
 
-            let body = '';
-            const isNewRelease = (context.payload.action === "reopened" || context.payload.action === "opened");            
-            if(isNewRelease){
-              body = process.env.LOGS;
-            }else{
-              body = context.payload.pull_request.body;
-            }
-            let releaseBody = body.replace(/- -eol-/g,"").trim().replace(/-eol-/g,"\n").replace(/"/g,"'");
-            if(!releaseBody.includes(jira_base)){
-             releaseBody = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`);
-            }
+            const isNewRelease =
+              context.payload.action === 'opened' || context.payload.action === 'reopened';
+              
+            const body = isNewRelease
+              ? process.env.LOGS
+              : context.payload.pull_request.body;
+
+            core.info(`MERGE DIFF BODY DATA: ${body}`);
+
+            let releaseBody = body
+              .replace(/- -eol-/g, '')
+              .trim()
+              .replace(/-eol-/g, '\n')
+              .replace(/"/g, "'");
+              
+            const requestBody = `
+            ${releaseBody}
+            `;
 
             core.info(`RELEASE PR BODY DATA: ${releaseBody}`);
+
+            if (isNewRelease) {
+              const request = {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                title: context.payload.pull_request.title,
+                body: requestBody,
+              };
+              const response = await github.pulls.update(request);
+              if (response.status === 200) {
+                core.info(`UPDATE PR BODY: Success`);
+              } else {
+                core.error('UPDATE PR BODY: Failed');
+              }
+            }
+
+            if (!releaseBody.includes(jira_base)) {
+              releaseBody = releaseBody.replace(
+                fr_regex,
+                (jira_key) => `[${jira_key}](${jira_base}${jira_key})`
+              );
+            }
+
+            core.info(`RELEASE CHANGELOG BODY DATA: ${releaseBody}`);
 
             const releaseLog = `
             ## ${title}
 
             ${releaseBody}
             `;
-            if(isNewRelease){
-              const request = {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number,
-                title: context.payload.pull_request.title,
-                body: `
-                ${releaseBodyWithJiraLinks}
-                `
-              };
-
-            const requestBody = `
-            ${releaseBody}
-            `
-            if(isNewRelease){
-              const request = {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number,
-                title: context.payload.pull_request.title,
-                body: requestBody
-              };
-
-              const response = await github.pulls.update(request);              
-              if (response.status === 200) {
-                core.info('UPDATE PR BODY: Success');
-              }else{
-                core.error('UPDATE PR BODY: Failed');
-              }
-            }
 
             core.setOutput('changelog', releaseLog);
 
