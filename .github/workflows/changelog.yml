@@ -15,11 +15,15 @@ jobs:
     name: Changelog based on release PR
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Project
-        uses: actions/checkout@v2
-
-      - name: Get git log diff from merged branches
-        id: merge-log
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Get git logg diff
+        id: merges
         shell: bash
         if: github.event.action == 'reopened' || github.event.action == 'opened'
         run: |
@@ -81,7 +85,10 @@ jobs:
 
             core.setOutput('changelog', releaseLog);
 
-      # - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
       - name: Create changelog commit
         run: |
           git switch $GITHUB_HEAD_REF
