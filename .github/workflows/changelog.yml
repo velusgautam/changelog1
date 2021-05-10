@@ -20,7 +20,8 @@ jobs:
         with:
           node-version: 14
       - uses: actions/checkout@v2
-
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
       - name: Get git logg diff
         id: merges
         shell: bash
@@ -84,9 +85,6 @@ jobs:
 
             core.setOutput('changelog', releaseLog);
 
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
       - name: Create changelog commit
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
