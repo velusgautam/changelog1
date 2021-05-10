@@ -1,4 +1,9 @@
 # Hello CHANGELOG
+## Test changelog 123
+
+[[FR-14963](https://discoveryinc.atlassian.net/browse/FR-14963)] Do not deploy to ap1-prod
+[[FR-14578](https://discoveryinc.atlassian.net/browse/FR-14578)] Change log automation with GitHub action
+HELLO
 
 - [FR-14330] New icon sandbox page
 - FR-13953 Feature toggle info card terminal rights
@@ -107,10 +112,3 @@ GITHUB_TOKEN
 ## Change Log Test
 
 - MERGE COMMIT 1
-
-
-## Test changelog 123
-
-[[FR-14963](https://discoveryinc.atlassian.net/browse/FR-14963)] Do not deploy to ap1-prod
-[[FR-14578](https://discoveryinc.atlassian.net/browse/FR-14578)] Change log automation with GitHub action
-
