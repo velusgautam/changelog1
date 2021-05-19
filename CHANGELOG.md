@@ -1,5 +1,5 @@
 # Hello CHANGELOG
-## Test changelog
+## Test changelog 1
 
 - [[FR-14963](https://discoveryinc.atlassian.net/browse/FR-14963)] Do not deploy to ap1-prod
 - [[FR-14578](https://discoveryinc.atlassian.net/browse/FR-14578)] Change log automation with GitHub action
