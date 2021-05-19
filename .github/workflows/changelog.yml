@@ -42,6 +42,9 @@ jobs:
             const title = context.payload.pull_request.title;
             const jira_base = 'https://discoveryinc.atlassian.net/browse/';
             const fr_regex = /fr-\d+/gi;
+            
+            console.log(JSON.stringify(context.repo, undefined, 2));
+            
 
             const isNewRelease =
               context.payload.action === 'opened' || context.payload.action === 'reopened';
