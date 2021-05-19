@@ -43,7 +43,7 @@ jobs:
             const jira_base = 'https://discoveryinc.atlassian.net/browse/';
             const fr_regex = /fr-\d+/gi;
             
-            console.log(JSON.stringify(context.payload.pull_request.base.repo.pulls_url, undefined, 2));
+            console.log(JSON.stringify(context.payload.pull_request.head.repo.html_url, undefined, 2));
             
 
             const isNewRelease =
