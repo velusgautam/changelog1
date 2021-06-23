@@ -41,6 +41,8 @@ jobs:
           LOGS: ${{ steps.merge-log.outputs.logdiff }}
         with:
           script: |
+            const payload = JSON.stringify(context.payload, undefined, 2)
+            console.log(`The event payload: ${payload}`);
             const title = context.payload.pull_request.title;
             const jira_base = 'https://discoveryinc.atlassian.net/browse/'
             const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
