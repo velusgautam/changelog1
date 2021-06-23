@@ -44,17 +44,16 @@ jobs:
             console.log(tsourceBranch);
             console.log("--------------------")
             let releaseTicket = "release/fr-16101-2021-06-21".match(fr_regex);
-            releaseTicket = releaseTicket !== null ? releaseTicket[0]: "";
+            releaseTicket = releaseTicket !== null ? releaseTicket[0].toUpperCase() : "";
             console.log(releaseTicket);
             const today = new Date();
             const dd = String(today.getDate()).padStart(2, '0');
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const yyyy = today.getFullYear();
-            console.log(`${releaseTicket} Release ${yyyy}-${mm}-${dd}`);
+            const title = `${releaseTicket} Release ${yyyy}-${mm}-${dd}`;
             console.log("--------------------")
-            const payload = JSON.stringify(context.payload, undefined, 2)
-            console.log(`The event payload: ${payload}`);
-            const title = context.payload.pull_request.title;
+            
+            console.log(`Title: ${title}`);
             const jira_base = 'https://discoveryinc.atlassian.net/browse/';
             
             
