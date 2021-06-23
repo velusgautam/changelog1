@@ -1,7 +1,27 @@
 # Hello CHANGELOG
 ## FR-16101 Release 2021-06-23
 
+- [apac, legal] enable brand and main territory code | Anton Westman | [#3598](https://github.com/velusgautam/changelog1/pulls/3598)
 
+  - [[FR-15131](https://discoveryinc.atlassian.net/browse/FR-15131)] Change tab icon color for content in Site builder | Marcus Hansson | [#3596](https://github.com/velusgautam/changelog1/pulls/3596)
+
+  - [LAB-722] Add Jira issue field to experiment page | Max Davidson | [#3581](https://github.com/velusgautam/changelog1/pulls/3581)
+
+  - [[FR-14489](https://discoveryinc.atlassian.net/browse/FR-14489)] Ordering by username in users table | Velu S Gautam | [#3595](https://github.com/velusgautam/changelog1/pulls/3595)
+
+  - [[FR-15564](https://discoveryinc.atlassian.net/browse/FR-15564)] InfoPanel dropdown breaks table design in Channels | Mikael Ek | [#3582](https://github.com/velusgautam/changelog1/pulls/3582)
+
+  - Sync Master | Velu S Gautam | [#3593](https://github.com/velusgautam/changelog1/pulls/3593)
+
+  - [[FR-16122](https://discoveryinc.atlassian.net/browse/FR-16122)] Duplicate link entity data attributes | Max Davidson | [#3590](https://github.com/velusgautam/changelog1/pulls/3590)
+
+  - [[FR-16081](https://discoveryinc.atlassian.net/browse/FR-16081)] Exclude DOM from test errors | Sebastian Nordqvist | [#3584](https://github.com/velusgautam/changelog1/pulls/3584)
+
+  - [[FR-16123](https://discoveryinc.atlassian.net/browse/FR-16123)] Avoid empty error details | Max Davidson | [#3591](https://github.com/velusgautam/changelog1/pulls/3591)
+
+  - [[FR-15802](https://discoveryinc.atlassian.net/browse/FR-15802)] Warn saving capability definition with playable segments not also listable | LeoDanielsson | [#3566](https://github.com/velusgautam/changelog1/pulls/3566)
+
+  -  | Leo Danielsson |
 
 - [FR-14330] New icon sandbox page
 - FR-13953 Feature toggle info card terminal rights
