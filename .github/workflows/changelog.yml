@@ -39,11 +39,25 @@ jobs:
           LOGS: ${{ steps.merge-log.outputs.logdiff }}
         with:
           script: |
+            const fr_regex = /fr-\d+/gi;
+            const tsourceBranch = context.payload.head.ref;
+            console.log(tsourceBranch);
+            console.log("--------------------")
+            const releaseTicket = "release/fr-16101-2021-06-21".match(fr_regex);
+            console.log(releaseTicket);
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            const yyyy = today.getFullYear();
+
+            today = yyyy + '-' + mm + '-' + dd;
+            console.log(`${releaseTicket} Release ${today}`);
+            console.log("--------------------")
             const payload = JSON.stringify(context.payload, undefined, 2)
             console.log(`The event payload: ${payload}`);
             const title = context.payload.pull_request.title;
             const jira_base = 'https://discoveryinc.atlassian.net/browse/';
-            const fr_regex = /fr-\d+/gi;
+            
             
             console.log(JSON.stringify(context.payload.pull_request.head.repo.html_url));
             
