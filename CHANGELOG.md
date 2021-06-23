@@ -3,6 +3,7 @@
 
 - [[FR-14963](https://discoveryinc.atlassian.net/browse/FR-14963)] Do not deploy to ap1-prod
 - [[FR-14578](https://discoveryinc.atlassian.net/browse/FR-14578)] Change log automation with hello
+- boom
 
 - [FR-14330] New icon sandbox page
 - FR-13953 Feature toggle info card terminal rights
