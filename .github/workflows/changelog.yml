@@ -66,31 +66,17 @@ jobs:
               
             var pr_reg = /#\d+/g;
             
-            var text = `- [apac, legal] enable brand and main territory code||Anton Westman||Merge pull request #3598 from sbs-discovery-sweden/enable-brand-and-main-territory-on-term-kinds-in-apac-eol-
-              - [FR-15131] Change tab icon color for content in Site builder||Marcus Hansson||Merge pull request #3596 from sbs-discovery-sweden/feature/fr-15131-change-tab-color-on-a-collection-that-is-a-draft-eol-
-              - [LAB-722] Add Jira issue field to experiment page||Max Davidson||Merge pull request #3581 from sbs-discovery-sweden/feature/lab-722-add-jira-issue-field-on-experiment-page-eol-
-              - [FR-14489] Ordering by username in users table||Velu S Gautam||Merge pull request #3595 from sbs-discovery-sweden/feature/FR-14489-ordering-users-table-by-username-eol-
-              - [FR-15564] InfoPanel dropdown breaks table design in Channels||Mikael Ek||Merge pull request #3582 from sbs-discovery-sweden/feature/FR-15564-infopanel-dropdown-breaks-table-design-in-channels-eol-
-              - Sync Master||Velu S Gautam||Merge pull request #3593 from sbs-discovery-sweden/sync-master-eol-
-              - [FR-16122] Duplicate link entity data attributes||Max Davidson||Merge pull request #3590 from sbs-discovery-sweden/feature/fr-16122-duplicate-link-entity-data-attributes-eol-
-              - [FR-16081] Exclude DOM from test errors||Sebastian Nordqvist||Merge pull request #3584 from sbs-discovery-sweden/feature/fr-16081-exclude-dom-from-test-errors-eol-
-              - [FR-16123] Avoid empty error details||Max Davidson||Merge pull request #3591 from sbs-discovery-sweden/bugfix/fr-16123-avoid-empty-error-details-eol-
-              - [FR-15802] Warn saving capability definition with playable segments not also listable||LeoDanielsson||Merge pull request #3566 from sbs-discovery-sweden/feature/FR-15802-warn-saving-capdef-with-playable-packages-not-also-listable-eol-
-              - ||Leo Danielsson||Merge branch 'develop' into feature/FR-15802-warn-saving-capdef-with-playable-packages-not-also-listable-eol-`;
-            
-            const body = text.slice(0,-4)
+            const body = process.env.LOGS.slice(0,-4)
             .split("-eol-")
             .filter(commit => !commit.startsWith("\n- ||"))
             .map(commit => {
                 let [message, name, subject] = commit.split("||");
-                console.log(message);
-                console.log(name);
                 let prNumber = subject.match(pr_reg);
-                console.log(prNumber);
                 prNumber = prNumber !== null ? prNumber[0] : "";
                 if(prNumber !== ""){
                     prNumber = `[${prNumber}](${context.payload.pull_request.head.repo.html_url}/pulls/${prNumber.replace('#', '')})`;
                 }
+                console.log(`${message} | ${name} | ${prNumber}`);
                 return `${message} | ${name} | ${prNumber}`;
             }).join("\n")
 
