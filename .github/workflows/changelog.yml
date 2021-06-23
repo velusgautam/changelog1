@@ -71,7 +71,7 @@ jobs:
             .filter(commit => !commit.startsWith("\n- ||"))
             .map(commit => {
                 let [message, name, subject] = commit.split("||");
-                let prNumber = subject.match(pr_reg);
+                let prNumber = subject && typeof subject === "string"  ? subject.match(pr_reg) : null;
                 prNumber = prNumber !== null ? prNumber[0] : "";
                 if(prNumber !== ""){
                     prNumber = `[${prNumber}](${context.payload.pull_request.head.repo.html_url}/pulls/${prNumber.replace('#', '')})`;
