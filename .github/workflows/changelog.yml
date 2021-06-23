@@ -43,15 +43,13 @@ jobs:
             const tsourceBranch = context.payload.pull_request.head.ref;
             console.log(tsourceBranch);
             console.log("--------------------")
-            const releaseTicket = "release/fr-16101-2021-06-21".match(fr_regex);
+            let releaseTicket = ("release/fr-16101-2021-06-21".match(fr_regex) ?? [])[0] ?? ""
             console.log(releaseTicket);
             const today = new Date();
             const dd = String(today.getDate()).padStart(2, '0');
             const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
             const yyyy = today.getFullYear();
-
-            today = yyyy + '-' + mm + '-' + dd;
-            console.log(`${releaseTicket} Release ${today}`);
+            console.log(`${releaseTicket} Release ${yyyy}-${mm}-${dd}`);
             console.log("--------------------")
             const payload = JSON.stringify(context.payload, undefined, 2)
             console.log(`The event payload: ${payload}`);
