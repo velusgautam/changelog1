@@ -39,7 +39,7 @@ jobs:
           LOGS: ${{ steps.merge-log.outputs.logdiff }}
         with:
           script: |
-            const payload = JSON.stringify(github.context.payload, undefined, 2)
+            const payload = JSON.stringify(context.payload, undefined, 2)
             console.log(`The event payload: ${payload}`);
             const title = context.payload.pull_request.title;
             const jira_base = 'https://discoveryinc.atlassian.net/browse/';
