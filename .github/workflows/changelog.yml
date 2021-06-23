@@ -86,7 +86,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: context.payload.pull_request.number,
-                title: context.payload.pull_request.title,
+                title: isNewRelease ? title : context.payload.pull_request.title,
                 body: requestBody,
               };
               const response = await github.pulls.update(request);
