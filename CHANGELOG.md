@@ -1,4 +1,7 @@
 # Hello CHANGELOG
+## FR-16101 Release 2021-06-23
+
+| undefined |
 
 - [FR-14330] New icon sandbox page
 - FR-13953 Feature toggle info card terminal rights
@@ -107,4 +110,3 @@ GITHUB_TOKEN
 ## Change Log Test
 
 - MERGE COMMIT 1
-

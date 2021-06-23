@@ -9,7 +9,7 @@ on:
   pull_request:
     types: [opened, reopened, edited]
     branches: [main]
-    
+
 jobs:
   create-changelog:
     name: Changelog based on release PR
@@ -19,8 +19,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-#       - env:
-#           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.ACTION_TOKEN }}
@@ -30,7 +28,7 @@ jobs:
         if: github.event.action == 'reopened' || github.event.action == 'opened'
         run: |
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
-          diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"- %b-eol-" | sed '/^\s*$/d')
+          diff=$(git log $GITHUB_BASE_REF..$GITHUB_HEAD_REF --merges --pretty=format:"- %b||%aN||%s-eol-" | sed '/^\s*$/d')
           echo "$diff"
           echo "::set-output name=logdiff::"$diff""
 
@@ -41,51 +39,91 @@ jobs:
           LOGS: ${{ steps.merge-log.outputs.logdiff }}
         with:
           script: |
-            const payload = JSON.stringify(context.payload, undefined, 2)
-            console.log(`The event payload: ${payload}`);
-            const title = context.payload.pull_request.title;
-            const jira_base = 'https://discoveryinc.atlassian.net/browse/'
-            const fr_regex = /((?!(FR|fr)-?$){1}[FR0-9fr]+-\d+)/g;
+            const fr_regex = /fr-\d+/gi;
+            const tsourceBranch = context.payload.pull_request.head.ref;
+            console.log(tsourceBranch);
+            console.log("--------------------")
+            let releaseTicket = "release/fr-16101-2021-06-21".match(fr_regex);
+            releaseTicket = releaseTicket !== null ? releaseTicket[0].toUpperCase() : "";
+            console.log(releaseTicket);
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const yyyy = today.getFullYear();
+            const title = `${releaseTicket} Release ${yyyy}-${mm}-${dd}`;
+            console.log("--------------------")
+            
+            console.log(`Title: ${title}`);
+            const jira_base = 'https://discoveryinc.atlassian.net/browse/';
+            
+            
+            console.log(JSON.stringify(context.payload.pull_request.head.repo.html_url));
+            
 
-            let body = '';
-            const isNewRelease = (context.payload.action === "reopened" || context.payload.action === "opened");            
-            if(isNewRelease){
-              body = process.env.LOGS;
-            }else{
-              body = context.payload.pull_request.body;
-            }
-            let releaseBody = body.replace(/- -eol-/g,"").trim().replace(/-eol-/g,"\n").replace(/"/g,"'");
-            if(!releaseBody.includes(jira_base)){
-             releaseBody = releaseBody.replace(fr_regex, jira_key =>`[${jira_key}](${jira_base}${jira_key})`);
-            }
+            const isNewRelease =
+              context.payload.action === 'opened' || context.payload.action === 'reopened';
+              
+              
+            var pr_reg = /#\d+/g;
+            
+            const body = process.env.LOGS.slice(0,-4)
+            .split("-eol-")
+            .filter(commit => !commit.startsWith("\n- ||"))
+            .map(commit => {
+                let [message, name, subject] = commit.split("||");
+                let prNumber = subject && typeof subject === "string"  ? subject.match(pr_reg) : null;
+                prNumber = prNumber !== null ? prNumber[0] : "";
+                if(prNumber !== ""){
+                    prNumber = `[${prNumber}](${context.payload.pull_request.head.repo.html_url}/pulls/${prNumber.replace('#', '')})`;
+                }
+                console.log(`${message} | ${name} | ${prNumber}`);
+                return `${message} | ${name} | ${prNumber}`;
+            }).join("\n")
+
+            core.info(`MERGE DIFF BODY DATA: ${body}`);
+
+            let releaseBody = body
+              .replace(/- -eol-/g, '')
+              .trim()
+              .replace(/-eol-/g, '\n')
+              .replace(/"/g, "'");
+              
+            const requestBody = `
+            ${releaseBody}
+            `;
 
             core.info(`RELEASE PR BODY DATA: ${releaseBody}`);
+
+            if (isNewRelease) {
+              const request = {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                title: isNewRelease ? title : context.payload.pull_request.title,
+                body: requestBody,
+              };
+              const response = await github.pulls.update(request);
+              if (response.status === 200) {
+                core.info(`UPDATE PR BODY: Success`);
+              } else {
+                core.error('UPDATE PR BODY: Failed');
+              }
+            }
+
+            if (!releaseBody.includes(jira_base)) {
+              releaseBody = releaseBody.replace(
+                fr_regex,
+                (jira_key) => `[${jira_key}](${jira_base}${jira_key})`
+              );
+            }
+
+            core.info(`RELEASE CHANGELOG BODY DATA: ${releaseBody}`);
 
             const releaseLog = `
             ## ${title}
 
             ${releaseBody}
             `;
-
-            const requestBody = `
-            ${releaseBody}
-            `
-            if(isNewRelease){
-              const request = {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number,
-                title: context.payload.pull_request.title,
-                body: requestBody
-              };
-
-              const response = await github.pulls.update(request);              
-              if (response.status === 200) {
-                core.info(`UPDATE PR BODY: Success`);
-              }else{
-                core.error('UPDATE PR BODY: Failed');
-              }
-            }
 
             core.setOutput('changelog', releaseLog);
 
@@ -94,7 +132,7 @@ jobs:
           git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
           git switch $GITHUB_HEAD_REF
           git checkout $GITHUB_BASE_REF CHANGELOG.md
-          echo "${{steps.create-change-log.outputs.changelog}}" >> CHANGELOG.md
+          echo -e "$(head -n 1 CHANGELOG.md)${{steps.create-change-log.outputs.changelog}}$(tail -n +2  CHANGELOG.md)" > CHANGELOG.md
           git add CHANGELOG.md
           git config user.name github-actions
           git config user.email github-actions@github.com
