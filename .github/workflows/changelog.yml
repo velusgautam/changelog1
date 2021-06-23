@@ -40,7 +40,7 @@ jobs:
         with:
           script: |
             const fr_regex = /fr-\d+/gi;
-            const tsourceBranch = context.payload.head.ref;
+            const tsourceBranch = context.payload.pull_request.head.ref;
             console.log(tsourceBranch);
             console.log("--------------------")
             const releaseTicket = "release/fr-16101-2021-06-21".match(fr_regex);
